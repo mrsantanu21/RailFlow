@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "surface-container-high": "#25293a", "border-cyan-glow": "rgba(56, 189, 248, 0.3)", "secondary-fixed": "#ffddb8", "on-secondary": "#472a00", "on-primary": "#00354a", "surface-container-lowest": "#080d1d", "surface-base": "#0B1020", "on-primary-fixed": "#001e2c", "surface-tint": "#7bd0ff", "surface-dim": "#0e1323", "status-rac-tatkal": "#F59E0B", "on-background": "#dee1f9", "tertiary": "#56e5a9", "status-waitlist": "#EF4444", "on-primary-fixed-variant": "#004c69", "primary-fixed-dim": "#7bd0ff", "on-tertiary-fixed": "#002113", "surface-glass": "rgba(20, 27, 45, 0.75)", "border-subtle": "rgba(30, 41, 59, 0.8)", "tertiary-fixed": "#6ffbbe", "surface-bright": "#34394a", "secondary": "#ffb95f", "on-tertiary-fixed-variant": "#005236", "secondary-container": "#ee9800", "telemetry-cyan": "#38BDF8", "error-container": "#93000a", "on-error-container": "#ffdad6", "on-tertiary-container": "#004e34", "on-surface": "#dee1f9", "on-error": "#690005", "surface-container-low": "#161b2b", "surface-container": "#1a1f30", "inverse-on-surface": "#2b3041", "outline-variant": "#3e484f", "on-secondary-fixed-variant": "#653e00", "outline": "#87929a", "on-secondary-container": "#5b3800", "background": "#0e1323", "status-confirmed": "#10B981", "on-tertiary": "#003824", "inverse-surface": "#dee1f9", "on-secondary-fixed": "#2a1700", "tertiary-container": "#30c88f", "primary": "#8ed5ff", "secondary-fixed-dim": "#ffb95f", "primary-fixed": "#c4e7ff", "on-primary-container": "#004965", "surface": "#0e1323", "tertiary-fixed-dim": "#4edea3", "error": "#ffb4ab", "primary-container": "#38bdf8", "surface-container-highest": "#2f3446", "inverse-primary": "#00668a", "on-surface-variant": "#bdc8d1", "surface-variant": "#2f3446" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-lg": "1.5rem", "space-md": "1rem", "space-xl": "2.5rem", "gutter-mobile": "1rem", "space-sm": "0.5rem", "margin-mobile": "1rem", "space-xs": "0.25rem", "gutter": "1.5rem", "margin": "2rem" }, "fontFamily": { "display-lg-mobile": [ "Plus Jakarta Sans" ], "label-sm": [ "Plus Jakarta Sans" ], "label-lg": [ "Plus Jakarta Sans" ], "headline-md": [ "Plus Jakarta Sans" ], "headline-sm": [ "Plus Jakarta Sans" ], "body-lg": [ "Inter" ], "body-sm": [ "Inter" ], "label-md": [ "Plus Jakarta Sans" ], "display-lg": [ "Plus Jakarta Sans" ], "headline-lg": [ "Plus Jakarta Sans" ], "display-md-mobile": [ "Plus Jakarta Sans" ], "display-md": [ "Plus Jakarta Sans" ], "body-md": [ "Inter" ] }, "fontSize": { "display-lg-mobile": [ "2.25rem", { "lineHeight": "2.75rem", "letterSpacing": "-0.02em", "fontWeight": "800" } ], "label-sm": [ "0.6875rem", { "lineHeight": "0.875rem", "letterSpacing": "0.05em", "fontWeight": "700" } ], "label-lg": [ "0.875rem", { "lineHeight": "1.25rem", "letterSpacing": "0.01em", "fontWeight": "600" } ], "headline-md": [ "1.5rem", { "lineHeight": "2rem", "letterSpacing": "-0.015em", "fontWeight": "600" } ], "headline-sm": [ "1.25rem", { "lineHeight": "1.75rem", "letterSpacing": "-0.01em", "fontWeight": "600" } ], "body-lg": [ "1.125rem", { "lineHeight": "1.75rem", "letterSpacing": "-0.01em", "fontWeight": "400" } ], "body-sm": [ "0.875rem", { "lineHeight": "1.25rem", "letterSpacing": "0em", "fontWeight": "400" } ], "label-md": [ "0.75rem", { "lineHeight": "1rem", "letterSpacing": "0.03em", "fontWeight": "600" } ], "display-lg": [ "3.5rem", { "lineHeight": "4rem", "letterSpacing": "-0.03em", "fontWeight": "800" } ], "headline-lg": [ "2rem", { "lineHeight": "2.5rem", "letterSpacing": "-0.02em", "fontWeight": "700" } ], "display-md-mobile": [ "1.75rem", { "lineHeight": "2.25rem", "letterSpacing": "-0.02em", "fontWeight": "700" } ], "display-md": [ "2.5rem", { "lineHeight": "3rem", "letterSpacing": "-0.02em", "fontWeight": "700" } ], "body-md": [ "1rem", { "lineHeight": "1.5rem", "letterSpacing": "0em", "fontWeight": "400" } ] } } } };</script></head><body class="bg-surface-base font-body-md text-on-surface antialiased selection:bg-primary selection:text-on-primary min-h-screen flex flex-col"><header class="fixed top-0 left-0 w-full z-50 bg-surface-glass backdrop-blur-xl shadow-[0_4px_30px_rgba(0,0,0,0.5)]"><div class="h-16 max-w-[1320px] mx-auto px-margin flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-md"><a class="flex items-center gap-space-xs group" data-path="book-ticket" href="#"><span class="font-display-md-mobile text-display-md-mobile text-on-surface tracking-tight font-extrabold">Rail<span class="text-telemetry-cyan">Flow</span></span><div class="w-1.5 h-1.5 rounded-full bg-telemetry-cyan shadow-[0_0_8px_#38BDF8] ml-0.5"></div></a><div class="hidden xl:flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container-lowest"><div class="relative flex items-center justify-center"><div class="w-2 h-2 rounded-full bg-status-confirmed"></div><div class="absolute w-3 h-3 rounded-full bg-status-confirmed/40 animate-ping"></div></div><span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">IRCTC CRIS Connected</span></div></div><nav class="hidden lg:flex items-center gap-1 p-1 bg-surface-container-lowest rounded-full" data-active-classes="bg-surface-container-high text-telemetry-cyan font-semibold shadow-[0_0_12px_rgba(56,189,248,0.15)]"><a aria-current="page" class="px-space-md py-1.5 rounded-full transition-all bg-surface-container-high text-telemetry-cyan font-semibold shadow-[0_0_12px_rgba(56,189,248,0.15)]" data-path="book-ticket" href="#">Book Ticket</a><a class="px-space-md py-1.5 rounded-full font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all" data-path="live-tracking" href="#">Live Tracking</a><a class="px-space-md py-1.5 rounded-full font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all" data-path="pnr-status" href="#">PNR Status</a><a class="px-space-md py-1.5 rounded-full font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all" data-path="my-trips" href="#">My Trips</a><a class="px-space-md py-1.5 rounded-full font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all" data-path="station-explorer" href="#">Station Explorer</a><a class="px-space-md py-1.5 rounded-full font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all" data-path="admin-dashboard" href="#">Admin Dashboard</a></nav><div class="flex items-center gap-space-sm"><button class="hidden sm:flex items-center gap-1.5 px-space-md py-1.5 rounded-full bg-gradient-to-r from-surface-container-high via-surface-container to-surface-container-high text-telemetry-cyan font-label-md text-label-md shadow-[0_0_16px_rgba(56,189,248,0.2)] hover:shadow-[0_0_22px_rgba(56,189,248,0.35)] transition-all"><span class="text-secondary">✨</span><span>RailFlow AI</span></button><div class="flex items-center gap-1"><button aria-label="Notifications" class="relative w-9 h-9 rounded-full bg-surface-container-lowest flex items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-telemetry-cyan shadow-[0_0_6px_#38BDF8]"></span></button><button aria-label="Language Selector" class="hidden md:flex items-center gap-1 px-2.5 h-9 rounded-full bg-surface-container-lowest font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-[16px]">translate</span><span>EN / हिंदी</span></button><button aria-label="Theme Switcher" class="w-9 h-9 rounded-full bg-surface-container-lowest flex items-center justify-center text-telemetry-cyan hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-[20px]">dark_mode</span></button></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 bg-surface-base flex-1"><div class="flex flex-col w-full text-on-surface">
+<!-- Ambient Backdrop Glow Shapes -->
+<div class="relative w-full overflow-hidden">
+<div class="absolute -top-32 left-1/4 w-[540px] h-[540px] bg-primary-container/10 rounded-full blur-[140px] pointer-events-none"></div>
+<div class="absolute top-48 right-10 w-[420px] h-[420px] bg-secondary-container/10 rounded-full blur-[120px] pointer-events-none"></div>
+<div class="max-w-[1320px] mx-auto px-margin py-space-xl relative z-10 flex flex-col gap-space-xl">
+<!-- Hero Header -->
+<section class="flex flex-col items-center text-center max-w-4xl mx-auto space-y-space-md">
+<!-- Live Pill Badge -->
+<div class="inline-flex items-center gap-2 px-space-md py-1.5 rounded-full bg-surface-container-high shadow-lg">
+<span class="flex h-2 w-2 rounded-full bg-status-confirmed animate-ping"></span>
+<span class="font-label-sm text-label-sm text-status-confirmed uppercase tracking-widest">
+            OFFICIAL HIGH-SPEED NETWORK • CRIS LINKED • 24/7 TATKAL READY
+          </span>
+</div>
+<h1 class="font-display-lg text-display-lg font-extrabold tracking-tight text-on-surface">
+          Where will your next <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-telemetry-cyan">journey take you?</span>
+</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
+          Search trains, reserve verified berths, and manage live Indian Railway telemetry — powered by zero-friction predictive booking algorithms.
+        </p>
+</section>
+<!-- Floating Dark Glass Search Console -->
+<section class="w-full bg-surface-glass backdrop-blur-2xl rounded-xl p-space-lg shadow-2xl space-y-space-md">
+<!-- Origin, Swap, Destination, Date, Class Input Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-sm items-center">
+<!-- Origin Station (Cols 1-4) -->
+<div class="lg:col-span-4 bg-surface-container-lowest rounded-lg p-space-md hover:bg-surface-container-high transition-colors">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider block mb-1">From Station</span>
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-telemetry-cyan text-[22px]">pin_drop</span>
+<div class="flex flex-col min-w-0">
+<div class="flex items-baseline gap-2">
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface">New Jalpaiguri</span>
+<span class="font-label-md text-label-md px-1.5 py-0.5 rounded bg-surface-container text-telemetry-cyan">NJP</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">Siliguri, West Bengal</span>
+</div>
+</div>
+</div>
+<!-- Swap Button (Cols lg:1) -->
+<div class="lg:col-span-1 flex justify-center -my-2 lg:my-0">
+<button aria-label="Swap Origin and Destination" class="w-11 h-11 rounded-full bg-surface-container-high flex items-center justify-center text-telemetry-cyan shadow-md hover:bg-surface-container-highest hover:rotate-180 transition-all duration-300" id="station-swap-btn">
+<span class="material-symbols-outlined text-[20px]">swap_horiz</span>
+</button>
+</div>
+<!-- Destination Station (Cols 4-8) -->
+<div class="lg:col-span-4 bg-surface-container-lowest rounded-lg p-space-md hover:bg-surface-container-high transition-colors">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider block mb-1">To Station</span>
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-[22px]">location_on</span>
+<div class="flex flex-col min-w-0">
+<div class="flex items-baseline gap-2">
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface">Howrah Junction</span>
+<span class="font-label-md text-label-md px-1.5 py-0.5 rounded bg-surface-container text-secondary">HWH</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">Kolkata, West Bengal</span>
+</div>
+</div>
+</div>
+<!-- Departure Date (Cols 9-10) -->
+<div class="lg:col-span-3 bg-surface-container-lowest rounded-lg p-space-md hover:bg-surface-container-high transition-colors">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider block mb-1">Departure Date</span>
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-telemetry-cyan text-[22px]">calendar_today</span>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface">06 Oct 2026</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Tuesday • Festive Rush</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Passengers, Quota Bar & Search Action -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-space-sm items-center pt-space-xs">
+<!-- Passenger & Class Specifier -->
+<div class="md:col-span-5 bg-surface-container-lowest rounded-lg px-space-md py-3 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">airline_seat_recline_extra</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">1 Adult</span>
+<span class="text-outline-variant">•</span>
+<span class="font-label-md text-label-md px-2 py-0.5 rounded bg-surface-container text-telemetry-cyan font-semibold">3A (AC 3 Tier)</span>
+</div>
+<button class="text-on-surface-variant hover:text-telemetry-cyan">
+<span class="material-symbols-outlined text-[18px]">expand_more</span>
+</button>
+</div>
+<!-- Quota Segment Selector -->
+<div class="md:col-span-4 bg-surface-container-lowest rounded-lg px-space-md py-3 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">confirmation_number</span>
+<span class="font-body-md text-body-md text-on-surface">General Quota</span>
+</div>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-status-confirmed/10 text-status-confirmed font-bold uppercase">GN</span>
+</div>
+<!-- Primary Search Button -->
+<div class="md:col-span-3">
+<button class="w-full h-[52px] rounded-lg bg-primary-container hover:bg-telemetry-cyan text-on-primary font-label-lg text-label-lg font-bold flex items-center justify-center gap-2 shadow-xl hover:shadow-[0_0_24px_rgba(56,189,248,0.4)] transition-all">
+<span class="material-symbols-outlined text-[20px]">search</span>
+<span>Search Trains</span>
+</button>
+</div>
+</div>
+<!-- Quick Filter Strips (Dates & Hubs) -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm pt-space-xs text-on-surface-variant font-label-sm text-label-sm">
+<div class="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0">
+<span class="uppercase tracking-wider text-outline">Quick Dates:</span>
+<button class="px-2.5 py-1 rounded bg-surface-container hover:bg-surface-container-high hover:text-on-surface transition-colors">Today</button>
+<button class="px-2.5 py-1 rounded bg-surface-container hover:bg-surface-container-high hover:text-on-surface transition-colors">Tomorrow</button>
+<button class="px-2.5 py-1 rounded bg-primary-container text-on-primary font-bold shadow-sm">06 Oct (Tue)</button>
+<button class="px-2.5 py-1 rounded bg-surface-container hover:bg-surface-container-high hover:text-on-surface transition-colors">+2 Days</button>
+<button class="px-2.5 py-1 rounded bg-surface-container hover:bg-surface-container-high hover:text-on-surface transition-colors">Weekend</button>
+</div>
+<div class="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0">
+<span class="uppercase tracking-wider text-outline">Hubs:</span>
+<button class="hover:text-telemetry-cyan transition-colors">NDLS</button>
+<span>•</span>
+<button class="hover:text-telemetry-cyan transition-colors">CSMT</button>
+<span>•</span>
+<button class="hover:text-telemetry-cyan transition-colors">SBC</button>
+<span>•</span>
+<button class="hover:text-telemetry-cyan transition-colors">MAS</button>
+</div>
+</div>
+</section>
+<!-- Active Route Telemetry Summary Bar -->
+<section class="bg-surface-container-low rounded-lg p-space-md flex flex-col md:flex-row md:items-center justify-between gap-space-sm shadow-md">
+<div class="flex items-center gap-space-sm flex-wrap">
+<div class="flex items-center gap-1.5 font-headline-sm text-headline-sm font-bold text-on-surface">
+<span>New Jalpaiguri</span>
+<span class="text-telemetry-cyan font-bold">(NJP)</span>
+<span class="text-on-surface-variant text-base">➔</span>
+<span>Howrah Jn</span>
+<span class="text-secondary font-bold">(HWH)</span>
+</div>
+<span class="hidden lg:inline text-outline">•</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Tue, 06 Oct 2026</span>
+<span class="hidden lg:inline text-outline">•</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">1 Passenger • General Quota</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<div class="flex items-center gap-1 bg-surface-container-highest px-3 py-1.5 rounded text-on-surface font-label-md text-label-md">
+<span class="text-on-surface-variant">Sort by:</span>
+<span class="font-bold text-telemetry-cyan">Departure (Earliest)</span>
+<span class="material-symbols-outlined text-[16px]">arrow_drop_down</span>
+</div>
+<button class="px-3 py-1.5 rounded bg-surface-container text-on-surface hover:text-telemetry-cyan font-label-md text-label-md flex items-center gap-1 transition-colors">
+<span class="material-symbols-outlined text-[16px]">tune</span>
+<span>Modify</span>
+</button>
+</div>
+</section>
+<!-- Main Two-Column Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<!-- Left Filters Sidebar (Cols 1-4) -->
+<aside class="lg:col-span-4 space-y-space-md sticky top-20">
+<div class="bg-surface-container-low rounded-xl p-space-lg shadow-xl space-y-space-lg">
+<!-- Sidebar Header -->
+<div class="flex items-center justify-between pb-space-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-telemetry-cyan text-[20px]">filter_list</span>
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface">Filter Journeys</span>
+</div>
+<button class="font-label-sm text-label-sm text-on-surface-variant hover:text-telemetry-cyan uppercase tracking-wider transition-colors">Reset All</button>
+</div>
+<!-- Available Berths Only Toggle -->
+<div class="flex items-center justify-between bg-surface-container-lowest p-space-md rounded-lg">
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg font-semibold text-on-surface">Available Seats Only</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Hide WL &amp; Regret quotas</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-surface-base after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-on-surface after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-status-confirmed shadow-[0_0_12px_rgba(16,185,129,0.3)]"></div>
+</label>
+</div>
+<!-- Train Types Filter -->
+<div class="space-y-space-sm">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider block">Train Category</span>
+<div class="space-y-2">
+<label class="flex items-center justify-between p-2 rounded hover:bg-surface-container cursor-pointer transition-colors">
+<div class="flex items-center gap-2.5">
+<input checked="" class="w-4 h-4 rounded bg-surface-container-high text-telemetry-cyan accent-telemetry-cyan" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface">Vande Bharat Express</span>
+</div>
+<span class="font-label-sm text-label-sm px-1.5 py-0.5 rounded bg-surface-container text-telemetry-cyan font-bold">1</span>
+</label>
+<label class="flex items-center justify-between p-2 rounded hover:bg-surface-container cursor-pointer transition-colors">
+<div class="flex items-center gap-2.5">
+<input checked="" class="w-4 h-4 rounded bg-surface-container-high accent-telemetry-cyan" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface">Rajdhani / Shatabdi</span>
+</div>
+<span class="font-label-sm text-label-sm px-1.5 py-0.5 rounded bg-surface-container text-on-surface-variant">2</span>
+</label>
+<label class="flex items-center justify-between p-2 rounded hover:bg-surface-container cursor-pointer transition-colors">
+<div class="flex items-center gap-2.5">
+<input checked="" class="w-4 h-4 rounded bg-surface-container-high accent-telemetry-cyan" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface">Superfast Express</span>
+</div>
+<span class="font-label-sm text-label-sm px-1.5 py-0.5 rounded bg-surface-container text-on-surface-variant">5</span>
+</label>
+<label class="flex items-center justify-between p-2 rounded hover:bg-surface-container cursor-pointer transition-colors">
+<div class="flex items-center gap-2.5">
+<input class="w-4 h-4 rounded bg-surface-container-high accent-telemetry-cyan" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface-variant">Mail / Ordinary Express</span>
+</div>
+<span class="font-label-sm text-label-sm px-1.5 py-0.5 rounded bg-surface-container text-outline">4</span>
+</label>
+</div>
+</div>
+<!-- Departure Time Matrix -->
+<div class="space-y-space-sm">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider block">Departure Window</span>
+<div class="grid grid-cols-2 gap-2">
+<button class="p-2.5 rounded-lg bg-surface-container-high text-telemetry-cyan flex flex-col items-start gap-1 shadow-[0_0_12px_rgba(56,189,248,0.2)]">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">wb_sunny</span>
+<span class="font-label-md text-label-md font-bold">Morning</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">06:00 - 12:00</span>
+</button>
+<button class="p-2.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container text-on-surface-variant flex flex-col items-start gap-1 transition-colors">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">wb_twilight</span>
+<span class="font-label-md text-label-md">Afternoon</span>
+</div>
+<span class="font-body-sm text-body-sm text-outline">12:00 - 18:00</span>
+</button>
+<button class="p-2.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container text-on-surface-variant flex flex-col items-start gap-1 transition-colors">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">nights_stay</span>
+<span class="font-label-md text-label-md">Night</span>
+</div>
+<span class="font-body-sm text-body-sm text-outline">18:00 - 24:00</span>
+</button>
+<button class="p-2.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container text-on-surface-variant flex flex-col items-start gap-1 transition-colors">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">bedtime</span>
+<span class="font-label-md text-label-md">Early Dawn</span>
+</div>
+<span class="font-body-sm text-body-sm text-outline">00:00 - 06:00</span>
+</button>
+</div>
+</div>
+<!-- Travel Classes Grid -->
+<div class="space-y-space-sm">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider block">Journey Tier</span>
+<div class="flex flex-wrap gap-2">
+<button class="px-3 py-1.5 rounded-md bg-surface-container-lowest text-on-surface hover:bg-surface-container font-label-md text-label-md transition-colors">1A</button>
+<button class="px-3 py-1.5 rounded-md bg-surface-container-lowest text-on-surface hover:bg-surface-container font-label-md text-label-md transition-colors">2A</button>
+<button class="px-3.5 py-1.5 rounded-md bg-primary-container text-on-primary font-bold shadow-md font-label-md text-label-md">3A</button>
+<button class="px-3 py-1.5 rounded-md bg-surface-container-lowest text-on-surface hover:bg-surface-container font-label-md text-label-md transition-colors">CC</button>
+<button class="px-3 py-1.5 rounded-md bg-surface-container-lowest text-on-surface hover:bg-surface-container font-label-md text-label-md transition-colors">EC</button>
+<button class="px-3 py-1.5 rounded-md bg-surface-container-lowest text-on-surface hover:bg-surface-container font-label-md text-label-md transition-colors">SL</button>
+</div>
+</div>
+<!-- Onboard Amenities Filter -->
+<div class="space-y-space-sm pt-space-xs">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider block">Verified Amenities</span>
+<div class="space-y-2 font-body-sm text-body-sm">
+<label class="flex items-center gap-2 cursor-pointer text-on-surface">
+<input checked="" class="rounded bg-surface-container-high accent-telemetry-cyan" type="checkbox"/>
+<span>Pantry &amp; Live E-Catering</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer text-on-surface">
+<input checked="" class="rounded bg-surface-container-high accent-telemetry-cyan" type="checkbox"/>
+<span>Individual AC Charging Outlets</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer text-on-surface">
+<input checked="" class="rounded bg-surface-container-high accent-telemetry-cyan" type="checkbox"/>
+<span>Bio-Vacuum Sanitation</span>
+</label>
+</div>
+</div>
+<!-- Speed Promo Callout -->
+<div class="rounded-xl p-space-md bg-gradient-to-br from-surface-container-high via-surface-container to-surface-container-lowest shadow-lg space-y-2">
+<div class="flex items-center gap-2 text-secondary">
+<span class="material-symbols-outlined text-[20px]">bolt</span>
+<span class="font-label-sm text-label-sm font-bold uppercase tracking-wider">Fastest Corridor Record</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                NJP to Kolkata in just <span class="text-on-surface font-semibold">7h 25m</span>. Vande Bharat 22302 averages 76 km/h across Malda Town &amp; Bolpur Shantiniketan.
+              </p>
+</div>
+</div>
+</aside>
+<!-- Right Column (Train Results Feed) (Cols 5-12) -->
+<main class="lg:col-span-8 space-y-space-md">
+<!-- Live sync info header -->
+<div class="flex items-center justify-between px-space-md py-3 rounded-lg bg-surface-container-lowest">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-telemetry-cyan text-[18px]">verified</span>
+<span class="font-body-sm text-body-sm text-on-surface font-medium">3 high-speed corridor trains operate on Tuesday, 06 Oct 2026.</span>
+</div>
+<div class="hidden sm:flex items-center gap-1.5 font-label-sm text-label-sm text-status-confirmed">
+<span class="w-1.5 h-1.5 rounded-full bg-status-confirmed animate-pulse"></span>
+<span>Direct GDS Feed</span>
+</div>
+</div>
+<!-- CARD 1: 22302 Vande Bharat Express -->
+<article class="bg-surface-container-low rounded-xl p-space-lg shadow-xl hover:shadow-[0_8px_30px_rgba(56,189,248,0.1)] transition-all space-y-space-md">
+<!-- Train Card Top Bar -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm pb-space-sm">
+<div class="flex items-center gap-3">
+<span class="font-headline-sm text-headline-sm font-extrabold text-on-surface">VANDE BHARAT EXP</span>
+<span class="font-label-md text-label-md px-2.5 py-0.5 rounded bg-surface-container-high text-telemetry-cyan font-bold tracking-wider">#22302</span>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant">Runs: M T Th F S Su</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm px-2 py-1 rounded bg-secondary-container/20 text-secondary font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">electric_bolt</span>
+<span>Premium High-Speed</span>
+</span>
+</div>
+</div>
+<!-- AI Live Insight Banner -->
+<div class="flex items-center justify-between bg-surface-container-lowest px-space-md py-2.5 rounded-lg">
+<div class="flex items-center gap-2">
+<span class="text-secondary text-base">✨</span>
+<span class="font-body-sm text-body-sm text-on-surface font-medium">RailFlow AI: Fastest journey of the day with 99.4% punctuality rating.</span>
+</div>
+<button class="font-label-sm text-label-sm text-telemetry-cyan hover:underline flex items-center gap-1">
+<span>Ask AI</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+<!-- Schedule Track & Halts Visualizer -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-space-md items-center py-space-sm">
+<!-- Origin Time -->
+<div class="md:col-span-3 flex flex-col">
+<span class="font-display-md text-display-md font-extrabold text-on-surface">06:10</span>
+<span class="font-headline-sm text-headline-sm font-bold text-telemetry-cyan">NJP</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">New Jalpaiguri • Platform 1</span>
+</div>
+<!-- Graphic Rail Track -->
+<div class="md:col-span-6 flex flex-col items-center justify-center px-space-sm">
+<span class="font-label-md text-label-md font-bold text-on-surface-variant mb-1">07h 25m non-stop feel</span>
+<div class="w-full flex items-center gap-1">
+<div class="w-2.5 h-2.5 rounded-full bg-telemetry-cyan"></div>
+<div class="flex-1 h-0.5 bg-gradient-to-r from-telemetry-cyan via-primary to-secondary relative flex items-center justify-center">
+<div class="absolute -top-3 px-2 py-0.5 rounded-full bg-surface-container-highest text-[10px] text-on-surface font-bold">
+                      3 Halts (MLDT, BHP)
+                    </div>
+</div>
+<div class="w-2.5 h-2.5 rounded-full bg-secondary"></div>
+</div>
+<span class="font-label-sm text-label-sm text-status-confirmed mt-1">Superfast Speed • 562 km</span>
+</div>
+<!-- Destination Time -->
+<div class="md:col-span-3 flex flex-col md:items-end">
+<span class="font-display-md text-display-md font-extrabold text-on-surface">13:35</span>
+<span class="font-headline-sm text-headline-sm font-bold text-secondary">HWH</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Howrah Junction • Platform 10</span>
+</div>
+</div>
+<!-- Berth Classes Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-sm pt-space-xs">
+<!-- EC Option -->
+<div class="bg-surface-container-lowest p-space-md rounded-lg flex items-center justify-between hover:bg-surface-container-high transition-colors">
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface">EC</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">(Executive Chair)</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Breakfast &amp; Snacks Included</span>
+</div>
+<div class="flex flex-col items-end">
+<span class="font-headline-sm text-headline-sm font-extrabold text-on-surface">₹2,420</span>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-status-confirmed/15 text-status-confirmed font-bold">
+                    AVAILABLE 18
+                  </span>
+</div>
+</div>
+<!-- CC Option -->
+<div class="bg-surface-container-lowest p-space-md rounded-lg flex items-center justify-between hover:bg-surface-container-high transition-colors">
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface">CC</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">(AC Chair Car)</span>
+</div>
+<span class="font-body-sm text-body-sm text-status-confirmed">Auto-upgradation Opt-in</span>
+</div>
+<div class="flex flex-col items-end">
+<span class="font-headline-sm text-headline-sm font-extrabold text-on-surface">₹1,425</span>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-status-confirmed/15 text-status-confirmed font-bold">
+                    AVAILABLE 84
+                  </span>
+</div>
+</div>
+</div>
+<!-- Train Card Footer CTAs -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm pt-space-sm">
+<div class="flex items-center gap-space-md font-label-md text-label-md text-on-surface-variant">
+<button class="hover:text-telemetry-cyan flex items-center gap-1 transition-colors">
+<span class="material-symbols-outlined text-[16px]">map</span>
+<span>View Route</span>
+</button>
+<button class="hover:text-telemetry-cyan flex items-center gap-1 transition-colors">
+<span class="material-symbols-outlined text-[16px]">restaurant</span>
+<span>Food Menu</span>
+</button>
+<button class="hover:text-telemetry-cyan flex items-center gap-1 transition-colors">
+<span class="material-symbols-outlined text-[16px]">qr_code</span>
+<span>Express Boarding</span>
+</button>
+</div>
+<button class="px-space-lg py-2.5 rounded-lg bg-primary-container hover:bg-telemetry-cyan text-on-primary font-label-lg text-label-lg font-bold shadow-lg hover:shadow-[0_0_20px_rgba(56,189,248,0.4)] flex items-center justify-center gap-2 transition-all">
+<span>Book Now</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</article>
+<!-- CARD 2: 12042 Shatabdi Express -->
+<article class="bg-surface-container-low rounded-xl p-space-lg shadow-xl hover:shadow-[0_8px_30px_rgba(56,189,248,0.1)] transition-all space-y-space-md">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm pb-space-sm">
+<div class="flex items-center gap-3">
+<span class="font-headline-sm text-headline-sm font-extrabold text-on-surface">SHATABDI EXPRESS</span>
+<span class="font-label-md text-label-md px-2.5 py-0.5 rounded bg-surface-container-high text-telemetry-cyan font-bold tracking-wider">#12042</span>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant">Runs: All except Sun</span>
+</div>
+<div class="flex items-center gap-1.5 px-2.5 py-1 rounded bg-surface-container-highest text-status-confirmed font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+<span>94% On-Time Reliability</span>
+</div>
+</div>
+<!-- Schedule Visualizer -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-space-md items-center py-space-sm">
+<div class="md:col-span-3 flex flex-col">
+<span class="font-display-md text-display-md font-extrabold text-on-surface">13:25</span>
+<span class="font-headline-sm text-headline-sm font-bold text-telemetry-cyan">NJP</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">New Jalpaiguri</span>
+</div>
+<div class="md:col-span-6 flex flex-col items-center justify-center px-space-sm">
+<span class="font-label-md text-label-md font-bold text-on-surface-variant mb-1">08h 30m</span>
+<div class="w-full flex items-center gap-1">
+<div class="w-2.5 h-2.5 rounded-full bg-telemetry-cyan"></div>
+<div class="flex-1 h-0.5 bg-outline-variant relative flex items-center justify-center">
+<div class="absolute -top-3 px-2 py-0.5 rounded bg-surface-container-highest text-[10px] text-on-surface font-semibold">
+                      6 Intermediate Halts
+                    </div>
+</div>
+<div class="w-2.5 h-2.5 rounded-full bg-outline"></div>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant mt-1">Intercity Express Service</span>
+</div>
+<div class="md:col-span-3 flex flex-col md:items-end">
+<span class="font-display-md text-display-md font-extrabold text-on-surface">21:55</span>
+<span class="font-headline-sm text-headline-sm font-bold text-secondary">HWH</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Howrah Jn • Platform 9</span>
+</div>
+</div>
+<!-- Berth Classes Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-sm pt-space-xs">
+<!-- CC Option with RAC Warning -->
+<div class="bg-surface-container-lowest p-space-md rounded-lg flex items-center justify-between hover:bg-surface-container-high transition-colors">
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface">CC</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">AC Chair Car</span>
+</div>
+<span class="font-body-sm text-body-sm text-secondary">High Confirmation Likelihood</span>
+</div>
+<div class="flex flex-col items-end">
+<span class="font-headline-sm text-headline-sm font-extrabold text-on-surface">₹1,365</span>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-status-rac-tatkal/15 text-status-rac-tatkal font-bold">
+                    RAC 04 (95% Prob)
+                  </span>
+</div>
+</div>
+<!-- EC Option -->
+<div class="bg-surface-container-lowest p-space-md rounded-lg flex items-center justify-between hover:bg-surface-container-high transition-colors">
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface">EC</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Executive Class</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Fast Filling Fast Track</span>
+</div>
+<div class="flex flex-col items-end">
+<span class="font-headline-sm text-headline-sm font-extrabold text-on-surface">₹2,310</span>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-status-confirmed/15 text-status-confirmed font-bold">
+                    AVAILABLE 09
+                  </span>
+</div>
+</div>
+</div>
+<!-- Footer Action -->
+<div class="flex items-center justify-between pt-space-sm">
+<button class="font-label-md text-label-md text-on-surface-variant hover:text-telemetry-cyan flex items-center gap-1 transition-colors">
+<span class="material-symbols-outlined text-[16px]">list_alt</span>
+<span>Timetable &amp; Station Halts</span>
+</button>
+<button class="px-space-lg py-2.5 rounded-lg bg-surface-container-high hover:bg-primary-container hover:text-on-primary text-telemetry-cyan font-label-lg text-label-lg font-bold transition-all">
+<span>Book Now</span>
+</button>
+</div>
+</article>
+<!-- CARD 3: 12344 Darjeeling Mail -->
+<article class="bg-surface-container-low rounded-xl p-space-lg shadow-xl hover:shadow-[0_8px_30px_rgba(56,189,248,0.1)] transition-all space-y-space-md">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm pb-space-sm">
+<div class="flex items-center gap-3">
+<span class="font-headline-sm text-headline-sm font-extrabold text-on-surface">DARJEELING MAIL</span>
+<span class="font-label-md text-label-md px-2.5 py-0.5 rounded bg-surface-container-high text-telemetry-cyan font-bold tracking-wider">#12344</span>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant">Runs Daily</span>
+</div>
+<div class="flex items-center gap-1.5 px-2.5 py-1 rounded bg-surface-container text-on-surface-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px]">hotel</span>
+<span>Overnight Sleeper Classic</span>
+</div>
+</div>
+<!-- Schedule Visualizer -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-space-md items-center py-space-sm">
+<div class="md:col-span-3 flex flex-col">
+<span class="font-display-md text-display-md font-extrabold text-on-surface">20:00</span>
+<span class="font-headline-sm text-headline-sm font-bold text-telemetry-cyan">NJP</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">New Jalpaiguri</span>
+</div>
+<div class="md:col-span-6 flex flex-col items-center justify-center px-space-sm">
+<span class="font-label-md text-label-md font-bold text-on-surface-variant mb-1">10h 00m overnight</span>
+<div class="w-full flex items-center gap-1">
+<div class="w-2.5 h-2.5 rounded-full bg-telemetry-cyan"></div>
+<div class="flex-1 h-0.5 bg-outline-variant relative flex items-center justify-center">
+<div class="absolute -top-3 px-2 py-0.5 rounded bg-surface-container text-[10px] text-secondary font-bold">
+                      Arrives Next Morning (+1 Day)
+                    </div>
+</div>
+<div class="w-2.5 h-2.5 rounded-full bg-secondary"></div>
+</div>
+<span class="font-label-sm text-label-sm text-outline mt-1">Heritage Mail Corridor</span>
+</div>
+<div class="md:col-span-3 flex flex-col md:items-end">
+<span class="font-display-md text-display-md font-extrabold text-on-surface">06:00 <span class="text-sm font-normal text-secondary">+1D</span></span>
+<span class="font-headline-sm text-headline-sm font-bold text-secondary">HWH</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Howrah Jn • Platform 8</span>
+</div>
+</div>
+<!-- Berth Classes Matrix (4 Classes) -->
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-space-sm pt-space-xs">
+<div class="bg-surface-container-lowest p-space-sm rounded-lg flex flex-col justify-between">
+<div class="flex justify-between items-center mb-1">
+<span class="font-label-lg text-label-lg font-bold text-on-surface">1A</span>
+<span class="font-label-sm text-label-sm font-bold text-status-confirmed">AVL 04</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant font-semibold">₹3,150</span>
+</div>
+<div class="bg-surface-container-lowest p-space-sm rounded-lg flex flex-col justify-between">
+<div class="flex justify-between items-center mb-1">
+<span class="font-label-lg text-label-lg font-bold text-on-surface">2A</span>
+<span class="font-label-sm text-label-sm font-bold text-status-confirmed">AVL 22</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant font-semibold">₹1,890</span>
+</div>
+<div class="bg-surface-container-lowest p-space-sm rounded-lg flex flex-col justify-between">
+<div class="flex justify-between items-center mb-1">
+<span class="font-label-lg text-label-lg font-bold text-on-surface">3A</span>
+<span class="font-label-sm text-label-sm font-bold text-status-confirmed">AVL 68</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant font-semibold">₹1,340</span>
+</div>
+<div class="bg-surface-container-lowest p-space-sm rounded-lg flex flex-col justify-between">
+<div class="flex justify-between items-center mb-1">
+<span class="font-label-lg text-label-lg font-bold text-on-surface">SL</span>
+<span class="font-label-sm text-label-sm font-bold text-status-waitlist">WL 14</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant font-semibold">₹495</span>
+</div>
+</div>
+<!-- Footer Action -->
+<div class="flex items-center justify-between pt-space-sm">
+<button class="font-label-md text-label-md text-on-surface-variant hover:text-telemetry-cyan flex items-center gap-1 transition-colors">
+<span class="material-symbols-outlined text-[16px]">bed</span>
+<span>Bedroll &amp; Linen Policies</span>
+</button>
+<button class="px-space-lg py-2.5 rounded-lg bg-surface-container-high hover:bg-primary-container hover:text-on-primary text-telemetry-cyan font-label-lg text-label-lg font-bold transition-all">
+<span>Book Now</span>
+</button>
+</div>
+</article>
+</main>
+</div>
+<!-- Bottom Value Propositions (3 Dark Glass Cards) -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-space-lg pt-space-xl">
+<div class="bg-surface-glass backdrop-blur-xl p-space-lg rounded-xl shadow-lg flex flex-col space-y-space-sm">
+<div class="w-12 h-12 rounded-lg bg-primary-container/20 flex items-center justify-center text-telemetry-cyan">
+<span class="material-symbols-outlined text-[28px]">payments</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface">Zero Convenience Fee</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+            Direct reservation tunnel through authorized IRCTC partner pipeline. Zero hidden surcharges on UPI, RuPay, and NetBanking transactions.
+          </p>
+</div>
+<div class="bg-surface-glass backdrop-blur-xl p-space-lg rounded-xl shadow-lg flex flex-col space-y-space-sm">
+<div class="w-12 h-12 rounded-lg bg-secondary-container/20 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[28px]">currency_exchange</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface">Instant Tatkal Refunds</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+            Automated 15-minute automated refund settlement to your source payment method for cancelled tickets or waitlisted Tatkal bookings.
+          </p>
+</div>
+<div class="bg-surface-glass backdrop-blur-xl p-space-lg rounded-xl shadow-lg flex flex-col space-y-space-sm">
+<div class="w-12 h-12 rounded-lg bg-status-confirmed/20 flex items-center justify-center text-status-confirmed">
+<span class="material-symbols-outlined text-[28px]">satellite_alt</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface">Live GPS Sat-Tracking</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+            Direct integration with ISRO RTIS satellite receiver devices installed on locomotive cabs for accurate coach speed and arrival telemetrics.
+          </p>
+</div>
+</section>
+</div>
+</div>
+<script>
+    // Micro-interaction for Station Swap
+    document.getElementById('station-swap-btn')?.addEventListener('click', function() {
+      this.classList.toggle('rotate-180');
+    });
+  </script>
+</div></main><footer class="w-full bg-surface-container-lowest mt-space-xl shadow-[0_-1px_16px_rgba(0,0,0,0.4)]"><div class="max-w-[1320px] mx-auto px-margin py-space-xl"><div class="grid grid-cols-1 md:grid-cols-4 gap-space-lg mb-space-xl"><div class="md:col-span-2 space-y-space-sm"><div class="flex items-center gap-space-xs"><span class="font-headline-sm text-headline-sm text-on-surface font-extrabold">Rail<span class="text-telemetry-cyan">Flow</span></span><div class="w-1.5 h-1.5 rounded-full bg-telemetry-cyan shadow-[0_0_8px_#38BDF8]"></div></div><p class="font-body-sm text-body-sm text-on-surface-variant max-w-md">Next-generation enterprise transit platform engineered for Indian Railways booking telemetry, live predictive GPS tracking, and intelligent berth allocation.</p><div class="flex items-center gap-space-sm pt-space-xs"><div class="flex items-center gap-1.5 px-space-sm py-1 rounded-full bg-surface-container text-status-confirmed font-label-sm text-label-sm"><span class="material-symbols-outlined text-[16px]">verified</span><span>Authorized IRCTC Modern Partner</span></div><div class="flex items-center gap-1.5 px-space-sm py-1 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm"><span class="material-symbols-outlined text-[16px]">lock</span><span>256-bit SSL Telemetry</span></div></div></div><div class="space-y-space-xs"><span class="font-label-lg text-label-lg text-on-surface uppercase tracking-wider block">Passenger Support</span><ul class="space-y-space-xs font-body-sm text-body-sm text-on-surface-variant"><li class="flex items-center gap-1.5 text-on-surface"><div class="w-2 h-2 rounded-full bg-status-confirmed animate-pulse"></div><span>RailMadad Helpline 139 (Live)</span></li><li><a class="hover:text-telemetry-cyan transition-colors" data-path="passenger-rights" href="#">Passenger Rights Charter</a></li><li><a class="hover:text-telemetry-cyan transition-colors" data-path="refund-rules" href="#">TDR &amp; Refund Rules</a></li><li><a class="hover:text-telemetry-cyan transition-colors" data-path="tatkal-guidelines" href="#">Tatkal &amp; Quota Guidelines</a></li></ul></div><div class="space-y-space-xs"><span class="font-label-lg text-label-lg text-on-surface uppercase tracking-wider block">Governance &amp; Data</span><ul class="space-y-space-xs font-body-sm text-body-sm text-on-surface-variant"><li><a class="hover:text-telemetry-cyan transition-colors" data-path="security-architecture" href="#">Security Architecture</a></li><li><a class="hover:text-telemetry-cyan transition-colors" data-path="privacy-policy" href="#">Privacy Policy</a></li><li><a class="hover:text-telemetry-cyan transition-colors" data-path="terms-of-service" href="#">Terms of Service</a></li><li><a class="hover:text-telemetry-cyan transition-colors" data-path="api-telemetry" href="#">CRIS Telemetry API Access</a></li></ul></div></div><div class="pt-space-lg flex flex-col sm:flex-row items-center justify-between gap-space-sm font-label-sm text-label-sm text-on-surface-variant"><p>© 2026 RailFlow Systems India Private Limited. All rights reserved.</p><div class="flex items-center gap-space-md"><span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px] text-telemetry-cyan">sensors</span> CR-WR-NR Grid Synchronized</span><span>v4.18.2-prod</span></div></div></div></footer></body></html>

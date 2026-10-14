@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "surface-container-high": "#25293a", "border-cyan-glow": "rgba(56, 189, 248, 0.3)", "secondary-fixed": "#ffddb8", "on-secondary": "#472a00", "on-primary": "#00354a", "surface-container-lowest": "#080d1d", "surface-base": "#0B1020", "on-primary-fixed": "#001e2c", "surface-tint": "#7bd0ff", "surface-dim": "#0e1323", "status-rac-tatkal": "#F59E0B", "on-background": "#dee1f9", "tertiary": "#56e5a9", "status-waitlist": "#EF4444", "on-primary-fixed-variant": "#004c69", "primary-fixed-dim": "#7bd0ff", "on-tertiary-fixed": "#002113", "surface-glass": "rgba(20, 27, 45, 0.75)", "border-subtle": "rgba(30, 41, 59, 0.8)", "tertiary-fixed": "#6ffbbe", "surface-bright": "#34394a", "secondary": "#ffb95f", "on-tertiary-fixed-variant": "#005236", "secondary-container": "#ee9800", "telemetry-cyan": "#38BDF8", "error-container": "#93000a", "on-error-container": "#ffdad6", "on-tertiary-container": "#004e34", "on-surface": "#dee1f9", "on-error": "#690005", "surface-container-low": "#161b2b", "surface-container": "#1a1f30", "inverse-on-surface": "#2b3041", "outline-variant": "#3e484f", "on-secondary-fixed-variant": "#653e00", "outline": "#87929a", "on-secondary-container": "#5b3800", "background": "#0e1323", "status-confirmed": "#10B981", "on-tertiary": "#003824", "inverse-surface": "#dee1f9", "on-secondary-fixed": "#2a1700", "tertiary-container": "#30c88f", "primary": "#8ed5ff", "secondary-fixed-dim": "#ffb95f", "primary-fixed": "#c4e7ff", "on-primary-container": "#004965", "surface": "#0e1323", "tertiary-fixed-dim": "#4edea3", "error": "#ffb4ab", "primary-container": "#38bdf8", "surface-container-highest": "#2f3446", "inverse-primary": "#00668a", "on-surface-variant": "#bdc8d1", "surface-variant": "#2f3446" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-lg": "1.5rem", "space-md": "1rem", "space-xl": "2.5rem", "gutter-mobile": "1rem", "space-sm": "0.5rem", "margin-mobile": "1rem", "space-xs": "0.25rem", "gutter": "1.5rem", "margin": "2rem" }, "fontFamily": { "display-lg-mobile": [ "Plus Jakarta Sans" ], "label-sm": [ "Plus Jakarta Sans" ], "label-lg": [ "Plus Jakarta Sans" ], "headline-md": [ "Plus Jakarta Sans" ], "headline-sm": [ "Plus Jakarta Sans" ], "body-lg": [ "Inter" ], "body-sm": [ "Inter" ], "label-md": [ "Plus Jakarta Sans" ], "display-lg": [ "Plus Jakarta Sans" ], "headline-lg": [ "Plus Jakarta Sans" ], "display-md-mobile": [ "Plus Jakarta Sans" ], "display-md": [ "Plus Jakarta Sans" ], "body-md": [ "Inter" ] }, "fontSize": { "display-lg-mobile": [ "2.25rem", { "lineHeight": "2.75rem", "letterSpacing": "-0.02em", "fontWeight": "800" } ], "label-sm": [ "0.6875rem", { "lineHeight": "0.875rem", "letterSpacing": "0.05em", "fontWeight": "700" } ], "label-lg": [ "0.875rem", { "lineHeight": "1.25rem", "letterSpacing": "0.01em", "fontWeight": "600" } ], "headline-md": [ "1.5rem", { "lineHeight": "2rem", "letterSpacing": "-0.015em", "fontWeight": "600" } ], "headline-sm": [ "1.25rem", { "lineHeight": "1.75rem", "letterSpacing": "-0.01em", "fontWeight": "600" } ], "body-lg": [ "1.125rem", { "lineHeight": "1.75rem", "letterSpacing": "-0.01em", "fontWeight": "400" } ], "body-sm": [ "0.875rem", { "lineHeight": "1.25rem", "letterSpacing": "0em", "fontWeight": "400" } ], "label-md": [ "0.75rem", { "lineHeight": "1rem", "letterSpacing": "0.03em", "fontWeight": "600" } ], "display-lg": [ "3.5rem", { "lineHeight": "4rem", "letterSpacing": "-0.03em", "fontWeight": "800" } ], "headline-lg": [ "2rem", { "lineHeight": "2.5rem", "letterSpacing": "-0.02em", "fontWeight": "700" } ], "display-md-mobile": [ "1.75rem", { "lineHeight": "2.25rem", "letterSpacing": "-0.02em", "fontWeight": "700" } ], "display-md": [ "2.5rem", { "lineHeight": "3rem", "letterSpacing": "-0.02em", "fontWeight": "700" } ], "body-md": [ "1rem", { "lineHeight": "1.5rem", "letterSpacing": "0em", "fontWeight": "400" } ] } } } };</script></head><body class="bg-surface-base font-body-md text-on-surface antialiased selection:bg-primary selection:text-on-primary min-h-screen flex flex-col"><header class="fixed top-0 left-0 w-full z-50 bg-surface-glass backdrop-blur-xl shadow-[0_4px_30px_rgba(0,0,0,0.5)]"><div class="h-16 max-w-[1320px] mx-auto px-margin flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-md"><a class="flex items-center gap-space-xs group" data-path="book-ticket" href="#"><span class="font-display-md-mobile text-display-md-mobile text-on-surface tracking-tight font-extrabold">Rail<span class="text-telemetry-cyan">Flow</span></span><div class="w-1.5 h-1.5 rounded-full bg-telemetry-cyan shadow-[0_0_8px_#38BDF8] ml-0.5"></div></a><div class="hidden xl:flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container-lowest"><div class="relative flex items-center justify-center"><div class="w-2 h-2 rounded-full bg-status-confirmed"></div><div class="absolute w-3 h-3 rounded-full bg-status-confirmed/40 animate-ping"></div></div><span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">IRCTC CRIS Connected</span></div></div><nav class="hidden lg:flex items-center gap-1 p-1 bg-surface-container-lowest rounded-full" data-active-classes="bg-surface-container-high text-telemetry-cyan font-semibold shadow-[0_0_12px_rgba(56,189,248,0.15)]"><a class="px-space-md py-1.5 rounded-full font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all" data-path="book-ticket" href="#">Book Ticket</a><a aria-current="page" class="px-space-md py-1.5 rounded-full transition-all bg-surface-container-high text-telemetry-cyan font-semibold shadow-[0_0_12px_rgba(56,189,248,0.15)]" data-path="live-tracking" href="#">Live Tracking</a><a class="px-space-md py-1.5 rounded-full font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all" data-path="pnr-status" href="#">PNR Status</a><a class="px-space-md py-1.5 rounded-full font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all" data-path="my-trips" href="#">My Trips</a><a class="px-space-md py-1.5 rounded-full font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all" data-path="station-explorer" href="#">Station Explorer</a><a class="px-space-md py-1.5 rounded-full font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all" data-path="admin-dashboard" href="#">Admin Dashboard</a></nav><div class="flex items-center gap-space-sm"><button class="hidden sm:flex items-center gap-1.5 px-space-md py-1.5 rounded-full bg-gradient-to-r from-surface-container-high via-surface-container to-surface-container-high text-telemetry-cyan font-label-md text-label-md shadow-[0_0_16px_rgba(56,189,248,0.2)] hover:shadow-[0_0_22px_rgba(56,189,248,0.35)] transition-all"><span class="text-secondary">✨</span><span>RailFlow AI</span></button><div class="flex items-center gap-1"><button aria-label="Notifications" class="relative w-9 h-9 rounded-full bg-surface-container-lowest flex items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-telemetry-cyan shadow-[0_0_6px_#38BDF8]"></span></button><button aria-label="Language Selector" class="hidden md:flex items-center gap-1 px-2.5 h-9 rounded-full bg-surface-container-lowest font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-[16px]">translate</span><span>EN / हिंदी</span></button><button aria-label="Theme Switcher" class="w-9 h-9 rounded-full bg-surface-container-lowest flex items-center justify-center text-telemetry-cyan hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-[20px]">dark_mode</span></button></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 bg-surface-base flex-1"><div class="flex flex-col w-full">
+<div class="max-w-[1320px] w-full mx-auto px-margin py-space-md space-y-space-md">
+<!-- Sub-Navbar Radar Telemetry Strip -->
+<div class="flex flex-wrap items-center justify-between gap-space-sm px-space-md py-space-sm rounded-lg bg-surface-container-lowest shadow-md">
+<div class="flex items-center gap-space-sm">
+<div class="relative flex items-center justify-center">
+<div class="w-2.5 h-2.5 rounded-full bg-status-confirmed shadow-[0_0_10px_#10B981]"></div>
+<div class="absolute w-4 h-4 rounded-full bg-status-confirmed/30 animate-ping"></div>
+</div>
+<div class="flex items-center gap-space-xs font-label-md text-label-md">
+<span class="text-telemetry-cyan font-bold tracking-wider">((•)) LIVE RADAR NETWORK</span>
+<span class="text-on-surface-variant">/</span>
+<span class="text-on-surface-variant">South Eastern Railway Zone</span>
+<span class="text-on-surface-variant">/</span>
+<span class="text-on-surface font-semibold">12841 COROMANDEL EXP</span>
+</div>
+</div>
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-space-xs text-on-surface-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[15px] text-telemetry-cyan">satellite_alt</span>
+<span>Updated <span id="sync-counter">2m</span> ago via Satellite GPS / RTIS</span>
+</div>
+<button class="flex items-center gap-1 px-3 py-1 rounded-full bg-surface-container-high text-telemetry-cyan hover:bg-surface-bright font-label-sm text-label-sm shadow-[0_0_12px_rgba(56,189,248,0.2)] transition-all" id="sync-telemetry-btn">
+<span class="material-symbols-outlined text-[14px]">sync</span>
+<span>Sync RTIS</span>
+</button>
+</div>
+</div>
+<!-- Train Identity Master Command Card -->
+<section class="rounded-xl bg-surface-container-low p-space-lg shadow-xl relative overflow-hidden">
+<!-- Glow ambient background elements -->
+<div class="absolute -top-24 -left-24 w-80 h-80 rounded-full bg-telemetry-cyan/10 blur-3xl pointer-events-none"></div>
+<div class="absolute -bottom-24 -right-24 w-80 h-80 rounded-full bg-primary/10 blur-3xl pointer-events-none"></div>
+<div class="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-space-lg">
+<div class="flex flex-col sm:flex-row items-start sm:items-center gap-space-md">
+<div class="relative flex flex-col items-center justify-center w-24 h-24 rounded-xl bg-surface-container-lowest shadow-lg">
+<span class="font-label-sm text-label-sm text-telemetry-cyan tracking-widest font-mono">TRAIN NO.</span>
+<span class="font-display-md text-display-md text-on-surface leading-none tracking-tight">12841</span>
+<span class="font-label-sm text-label-sm text-status-confirmed mt-1">SUPERFAST</span>
+</div>
+<div class="space-y-space-xs">
+<div class="flex flex-wrap items-center gap-space-xs">
+<h1 class="font-headline-lg text-headline-lg text-on-surface font-extrabold tracking-tight">Coromandel Express</h1>
+<span class="px-2.5 py-0.5 rounded-full bg-telemetry-cyan/20 text-telemetry-cyan font-label-sm text-label-sm font-semibold tracking-wide">
+                RUNS DAILY
+              </span>
+<span class="px-2.5 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm">
+                CRIS RTIS v4.2
+              </span>
+</div>
+<div class="flex flex-wrap items-center gap-2 font-body-sm text-body-sm text-on-surface-variant">
+<span class="text-on-surface font-semibold">Shalimar (SHM)</span>
+<span class="material-symbols-outlined text-[16px] text-telemetry-cyan">arrow_forward</span>
+<span class="text-on-surface font-semibold">MGR Chennai Central (MAS)</span>
+<span>•</span>
+<span class="flex items-center gap-1 text-on-surface"><span class="material-symbols-outlined text-[15px] text-primary">distance</span> Total Run: 1,662 km</span>
+<span>•</span>
+<span class="flex items-center gap-1 text-on-surface"><span class="material-symbols-outlined text-[15px] text-primary">schedule</span> 25h 30m</span>
+</div>
+</div>
+</div>
+<!-- Quick Radar Search Input -->
+<div class="flex items-center gap-space-xs bg-surface-container-lowest p-1.5 rounded-lg shadow-inner self-stretch lg:self-auto">
+<div class="flex items-center gap-1.5 px-3 py-1.5 bg-surface-container rounded-md flex-1 lg:w-44">
+<span class="material-symbols-outlined text-[18px] text-telemetry-cyan">train</span>
+<input aria-label="Train Number" class="bg-transparent font-label-md text-label-md text-on-surface outline-none w-full placeholder:text-outline" type="text" value="12841"/>
+</div>
+<button class="px-space-md py-2 rounded-md bg-telemetry-cyan text-on-primary font-label-md text-label-md font-bold shadow-[0_0_16px_rgba(56,189,248,0.35)] hover:bg-primary transition-all flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">radar</span>
+<span>Track</span>
+</button>
+</div>
+</div>
+<!-- 4 High-Tech Telemetry Metric Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md mt-space-lg relative z-10">
+<!-- Metric 1: Schedule Status -->
+<div class="p-space-md rounded-lg bg-surface-container shadow-md flex items-start gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-status-confirmed/20 flex items-center justify-center text-status-confirmed shrink-0 shadow-[0_0_12px_rgba(16,185,129,0.3)]">
+<span class="material-symbols-outlined text-[24px]">verified</span>
+</div>
+<div class="space-y-0.5">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider block">Operational Status</span>
+<div class="font-headline-sm text-headline-sm text-status-confirmed font-bold">On Time (0 min)</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Departed Balasore on schedule</p>
+</div>
+</div>
+<!-- Metric 2: Realtime Speed -->
+<div class="p-space-md rounded-lg bg-surface-container shadow-md flex items-start gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-telemetry-cyan/20 flex items-center justify-center text-telemetry-cyan shrink-0 shadow-[0_0_12px_rgba(56,189,248,0.3)]">
+<span class="material-symbols-outlined text-[24px]">speed</span>
+</div>
+<div class="space-y-0.5">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider block">Satellite Speed</span>
+<div class="flex items-baseline gap-1">
+<span class="font-headline-sm text-headline-sm text-on-surface font-extrabold font-mono" id="live-speed-display">118</span>
+<span class="font-label-sm text-label-sm text-telemetry-cyan font-bold">KM/H</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Max MPS: 130 km/h (WAP-7 Haul)</p>
+</div>
+</div>
+<!-- Metric 3: Next Stoppage -->
+<div class="p-space-md rounded-lg bg-surface-container shadow-md flex items-start gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-status-rac-tatkal/20 flex items-center justify-center text-status-rac-tatkal shrink-0 shadow-[0_0_12px_rgba(245,158,11,0.3)]">
+<span class="material-symbols-outlined text-[24px]">near_me</span>
+</div>
+<div class="space-y-0.5">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider block">Approaching Station</span>
+<div class="font-headline-sm text-headline-sm text-on-surface font-bold">Bhadrak (BHC)</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">In 38 km • ETA 19:38 (PF 2)</p>
+</div>
+</div>
+<!-- Metric 4: Ambient Sensor Telemetry -->
+<div class="p-space-md rounded-lg bg-surface-container shadow-md flex items-start gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-secondary-container/20 flex items-center justify-center text-secondary shrink-0 shadow-[0_0_12px_rgba(255,185,95,0.3)]">
+<span class="material-symbols-outlined text-[24px]">wb_sunny</span>
+</div>
+<div class="space-y-0.5">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider block">Atmospheric Radar</span>
+<div class="font-headline-sm text-headline-sm text-on-surface font-bold">31°C Clear</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Humidity 64% • Visibility 10 km</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Main Content Workspace (2/3 and 1/3 Bento Partition) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg">
+<!-- LEFT SIDE (8 cols): Spatial Vector Radar & Timetable Tracker -->
+<section class="lg:col-span-8 space-y-space-md">
+<!-- Spatial Vector Radar Card -->
+<div class="rounded-xl bg-surface-container-low p-space-lg shadow-lg relative overflow-hidden">
+<div class="flex flex-wrap items-center justify-between gap-space-sm mb-space-md">
+<div class="space-y-0.5">
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">Spatial Vector Radar</span>
+<span class="px-2 py-0.5 rounded-full bg-status-confirmed/20 text-status-confirmed font-label-sm text-label-sm font-semibold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-status-confirmed"></span>
+                  Active Geofence Tracking
+                </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Kharagpur Division • South Eastern Railway Grid Matrix</p>
+</div>
+<div class="flex items-center gap-2 font-mono font-label-sm text-label-sm text-telemetry-cyan bg-surface-container-lowest px-3 py-1.5 rounded-md">
+<span class="material-symbols-outlined text-[15px]">my_location</span>
+<span>21.5035° N, 86.9248° E</span>
+</div>
+</div>
+<!-- Radar Track Schematic Canvas (High-Tech Vector) -->
+<div class="relative bg-surface-container-lowest rounded-lg p-space-lg overflow-x-auto">
+<!-- Grid decorative background overlay -->
+<div class="absolute inset-0 opacity-15 pointer-events-none" style="background-image: radial-gradient(rgba(56, 189, 248, 0.4) 1px, transparent 1px); background-size: 20px 20px;"></div>
+<div class="min-w-[620px] relative z-10 py-space-md">
+<!-- Schematic Path SVG -->
+<svg class="w-full h-24 overflow-visible" fill="none" viewbox="0 0 620 90" xmlns="http://www.w3.org/2000/svg">
+<!-- Track Bed Shadow -->
+<path d="M 40 45 L 140 45 L 260 45 L 360 45 L 470 45 L 580 45" stroke="rgba(30, 41, 59, 0.8)" stroke-linecap="round" stroke-width="8"></path>
+<!-- Visited Segment (Glow Cyan-Emerald) -->
+<path d="M 40 45 L 260 45" stroke="#10B981" stroke-linecap="round" stroke-width="4"></path>
+<!-- Upcoming In-Progress Track Segment (Cyan Pulse Track) -->
+<path d="M 260 45 L 360 45" stroke="#38BDF8" stroke-dasharray="6 4" stroke-linecap="round" stroke-width="4"></path>
+<!-- Unreached Track -->
+<path d="M 360 45 L 580 45" stroke="#334155" stroke-linecap="round" stroke-width="3"></path>
+<!-- Node: SHM (Passed) -->
+<circle cx="40" cy="45" fill="#10B981" r="9"></circle>
+<circle cx="40" cy="45" fill="#0B1020" r="4"></circle>
+<!-- Node: SRC (Passed) -->
+<circle cx="140" cy="45" fill="#10B981" r="7"></circle>
+<circle cx="140" cy="45" fill="#0B1020" r="3"></circle>
+<!-- Node: KGP (Passed) -->
+<circle cx="210" cy="45" fill="#10B981" r="8"></circle>
+<circle cx="210" cy="45" fill="#0B1020" r="3.5"></circle>
+<!-- Live Train Pin Position: Just past Balasore BLS (approx x=280) -->
+<g transform="translate(280, 45)">
+<!-- Outer radar pulse ping ring -->
+<circle class="animate-ping" cx="0" cy="0" fill="none" opacity="0.6" r="18" stroke="#38BDF8" stroke-width="1.5"></circle>
+<circle cx="0" cy="0" fill="#38BDF8" opacity="0.25" r="12"></circle>
+<circle cx="0" cy="0" fill="#F59E0B" r="7" stroke="#0B1020" stroke-width="2"></circle>
+</g>
+<!-- Node: BLS (Station Just Cleared) -->
+<circle cx="260" cy="45" fill="#F59E0B" r="8"></circle>
+<circle cx="260" cy="45" fill="#0B1020" r="3"></circle>
+<!-- Node: BHC (Approaching) -->
+<circle cx="360" cy="45" fill="#1E293B" r="8" stroke="#38BDF8" stroke-width="2"></circle>
+<circle cx="360" cy="45" fill="#38BDF8" r="3"></circle>
+<!-- Node: CTC (Future) -->
+<circle cx="470" cy="45" fill="#1E293B" r="6" stroke="#64748B" stroke-width="1.5"></circle>
+<!-- Node: MAS (Terminal) -->
+<circle cx="580" cy="45" fill="#1E293B" r="9" stroke="#64748B" stroke-width="2"></circle>
+<circle cx="580" cy="45" fill="#64748B" r="4"></circle>
+</svg>
+<!-- Node Labels Matrix -->
+<div class="flex items-center justify-between text-center pt-2 font-mono">
+<div class="w-16">
+<span class="font-label-md text-label-md text-status-confirmed block font-bold">SHM</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">15:20 D</span>
+</div>
+<div class="w-16">
+<span class="font-label-md text-label-md text-status-confirmed block font-bold">KGP</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">17:15 D</span>
+</div>
+<div class="w-24 relative -top-3 bg-surface-container px-2 py-1 rounded-md shadow-md">
+<div class="flex items-center justify-center gap-1">
+<span class="w-2 h-2 rounded-full bg-status-rac-tatkal animate-pulse"></span>
+<span class="font-label-md text-label-md text-on-surface font-extrabold">BLS (Live)</span>
+</div>
+<span class="font-label-sm text-label-sm text-status-confirmed font-semibold">18:35 On Time</span>
+</div>
+<div class="w-20">
+<span class="font-label-md text-label-md text-telemetry-cyan block font-bold">BHC (Next)</span>
+<span class="font-label-sm text-label-sm text-telemetry-cyan font-bold">19:38 ETA</span>
+</div>
+<div class="w-16">
+<span class="font-label-md text-label-md text-on-surface-variant block font-bold">CTC</span>
+<span class="font-label-sm text-label-sm text-outline">20:45</span>
+</div>
+<div class="w-16">
+<span class="font-label-md text-label-md text-on-surface block font-bold">MAS</span>
+<span class="font-label-sm text-label-sm text-outline">07:00 (+1)</span>
+</div>
+</div>
+</div>
+<!-- Traversed vs Remaining Telemetry Progress Strip -->
+<div class="mt-space-md pt-space-md bg-surface-container/50 rounded-lg p-space-sm space-y-space-xs">
+<div class="flex items-center justify-between font-label-sm text-label-sm">
+<span class="text-status-confirmed font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">check_circle</span> Traversed: 232 km (14%)
+                </span>
+<span class="text-telemetry-cyan font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">navigation</span> Remaining: 1,430 km (86%)
+                </span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-container-high overflow-hidden">
+<div class="h-full bg-gradient-to-r from-status-confirmed to-telemetry-cyan rounded-full" style="width: 14%;"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Comprehensive Realtime Station Timetable Tracker -->
+<div class="rounded-xl bg-surface-container-low p-space-lg shadow-lg space-y-space-md">
+<div class="flex flex-wrap items-center justify-between gap-space-sm">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-bold">Route Stoppages &amp; Platform Diagnostics</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Live station platform feed synced with National Train Enquiry System (NTES)</p>
+</div>
+<div class="flex items-center gap-1 bg-surface-container rounded-lg p-1">
+<button class="px-3 py-1 rounded bg-surface-container-high text-telemetry-cyan font-label-sm text-label-sm font-semibold">Scheduled</button>
+<button class="px-3 py-1 rounded text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm">Station Facilities</button>
+</div>
+</div>
+<!-- Vertical Timeline Construction -->
+<div class="relative pl-6 space-y-space-md before:absolute before:left-3 before:top-3 before:bottom-3 before:w-0.5 before:bg-surface-container-highest">
+<!-- Station 1: SHM -->
+<div class="relative flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm p-space-md rounded-lg bg-surface-container hover:bg-surface-container-high transition-colors">
+<div class="absolute -left-[27px] top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-status-confirmed flex items-center justify-center shadow-[0_0_8px_#10B981]">
+<span class="material-symbols-outlined text-[10px] text-surface-base font-bold">done</span>
+</div>
+<div class="space-y-0.5">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">Shalimar (SHM)</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-lowest text-on-surface-variant font-label-sm text-label-sm font-mono">Platform 1</span>
+<span class="px-2 py-0.5 rounded bg-status-confirmed/20 text-status-confirmed font-label-sm text-label-sm">Origin</span>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Source terminal • Distance: 0 km</div>
+</div>
+<div class="text-right sm:shrink-0 font-mono">
+<span class="font-headline-sm text-headline-sm text-status-confirmed font-bold">15:20</span>
+<span class="block font-label-sm text-label-sm text-on-surface-variant">Departed on time</span>
+</div>
+</div>
+<!-- Station 2: SRC -->
+<div class="relative flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm p-space-md rounded-lg bg-surface-container hover:bg-surface-container-high transition-colors">
+<div class="absolute -left-[27px] top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-status-confirmed flex items-center justify-center shadow-[0_0_8px_#10B981]">
+<span class="material-symbols-outlined text-[10px] text-surface-base font-bold">done</span>
+</div>
+<div class="space-y-0.5">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">Santragachi (SRC)</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-lowest text-on-surface-variant font-label-sm text-label-sm font-mono">Platform 1</span>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Distance: 5 km • 2m Stoppage</div>
+</div>
+<div class="text-right sm:shrink-0 font-mono">
+<span class="font-headline-sm text-headline-sm text-status-confirmed font-bold">15:38</span>
+<span class="block font-label-sm text-label-sm text-on-surface-variant">Departed on time</span>
+</div>
+</div>
+<!-- Station 3: KGP -->
+<div class="relative flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm p-space-md rounded-lg bg-surface-container hover:bg-surface-container-high transition-colors">
+<div class="absolute -left-[27px] top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-status-confirmed flex items-center justify-center shadow-[0_0_8px_#10B981]">
+<span class="material-symbols-outlined text-[10px] text-surface-base font-bold">done</span>
+</div>
+<div class="space-y-0.5">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">Kharagpur Junction (KGP)</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-lowest text-on-surface-variant font-label-sm text-label-sm font-mono">Platform 3</span>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Distance: 115 km • 5m Crew Change Stoppage</div>
+</div>
+<div class="text-right sm:shrink-0 font-mono">
+<span class="font-headline-sm text-headline-sm text-status-confirmed font-bold">17:15</span>
+<span class="block font-label-sm text-label-sm text-status-confirmed">+5m Delay Recovered</span>
+</div>
+</div>
+<!-- Station 4: BLS (CURRENT LIVE TARGET) -->
+<div class="relative flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm p-space-md rounded-lg bg-surface-container-high shadow-lg">
+<!-- Radiant Beacon Node -->
+<div class="absolute -left-[30px] top-1/2 -translate-y-1/2 flex items-center justify-center">
+<div class="w-6 h-6 rounded-full bg-status-rac-tatkal/30 animate-ping absolute"></div>
+<div class="w-5 h-5 rounded-full bg-status-rac-tatkal flex items-center justify-center shadow-[0_0_12px_#F59E0B] relative z-10">
+<span class="material-symbols-outlined text-[12px] text-surface-base font-bold">train</span>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex flex-wrap items-center gap-2">
+<span class="font-headline-sm text-headline-sm text-on-surface font-extrabold">Balasore (BLS)</span>
+<span class="px-2.5 py-0.5 rounded bg-status-rac-tatkal/20 text-status-rac-tatkal font-label-sm text-label-sm font-bold font-mono">
+                    Platform 2
+                  </span>
+<span class="px-2 py-0.5 rounded bg-telemetry-cyan/20 text-telemetry-cyan font-label-sm text-label-sm font-extrabold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-telemetry-cyan animate-pulse"></span>
+                    JUST DEPARTED (4m ago)
+                  </span>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Distance: 232 km • Speed through yard: 45 km/h accelerating</div>
+</div>
+<div class="text-right sm:shrink-0 font-mono">
+<span class="font-headline-sm text-headline-sm text-on-surface font-extrabold">18:35</span>
+<span class="block font-label-sm text-label-sm text-status-confirmed font-semibold">Departed On Time</span>
+</div>
+</div>
+<!-- Station 5: BHC (Next Up) -->
+<div class="relative flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm p-space-md rounded-lg bg-surface-container hover:bg-surface-container-high transition-colors">
+<div class="absolute -left-[27px] top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-surface-container-highest flex items-center justify-center">
+<div class="w-2 h-2 rounded-full bg-telemetry-cyan shadow-[0_0_8px_#38BDF8]"></div>
+</div>
+<div class="space-y-0.5">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">Bhadrak (BHC)</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-lowest text-on-surface-variant font-label-sm text-label-sm font-mono">Platform 2 (Expected)</span>
+<span class="px-2 py-0.5 rounded bg-telemetry-cyan/15 text-telemetry-cyan font-label-sm text-label-sm font-semibold">NEXT STOP</span>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Distance: 294 km • Stoppage: 2 mins • In 38 km</div>
+</div>
+<div class="text-right sm:shrink-0 font-mono">
+<span class="font-headline-sm text-headline-sm text-telemetry-cyan font-bold">19:38</span>
+<span class="block font-label-sm text-label-sm text-telemetry-cyan flex items-center justify-end gap-1">
+<span class="material-symbols-outlined text-[13px] animate-spin">timelapse</span> Expected
+                </span>
+</div>
+</div>
+<!-- Station 6: CTC -->
+<div class="relative flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm p-space-md rounded-lg bg-surface-container hover:bg-surface-container-high transition-colors opacity-80">
+<div class="absolute -left-[27px] top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-surface-container-highest"></div>
+<div class="space-y-0.5">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">Cuttack Junction (CTC)</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-lowest text-on-surface-variant font-label-sm text-label-sm font-mono">Platform 1 or 2</span>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Distance: 409 km • 5m Stoppage • Food Pick-up Hub</div>
+</div>
+<div class="text-right sm:shrink-0 font-mono">
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">20:45</span>
+<span class="block font-label-sm text-label-sm text-on-surface-variant">Predicted On Time</span>
+</div>
+</div>
+<!-- Station 7: BBS -->
+<div class="relative flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm p-space-md rounded-lg bg-surface-container hover:bg-surface-container-high transition-colors opacity-80">
+<div class="absolute -left-[27px] top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-surface-container-highest"></div>
+<div class="space-y-0.5">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">Bhubaneswar (BBS)</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-lowest text-on-surface-variant font-label-sm text-label-sm font-mono">Platform 4</span>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Distance: 437 km • Major Station Stoppage</div>
+</div>
+<div class="text-right sm:shrink-0 font-mono">
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">21:20</span>
+<span class="block font-label-sm text-label-sm text-on-surface-variant">Predicted On Time</span>
+</div>
+</div>
+<!-- Station 8: MAS (Destination) -->
+<div class="relative flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm p-space-md rounded-lg bg-surface-container hover:bg-surface-container-high transition-colors opacity-70">
+<div class="absolute -left-[27px] top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-surface-container-highest"></div>
+<div class="space-y-0.5">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">MGR Chennai Central (MAS)</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-lowest text-on-surface-variant font-label-sm text-label-sm font-mono">Platform 7</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm">Terminal Destination</span>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Distance: 1,662 km • Arrival Next Morning</div>
+</div>
+<div class="text-right sm:shrink-0 font-mono">
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">07:00 (+1)</span>
+<span class="block font-label-sm text-label-sm text-on-surface-variant">Scheduled Arrival</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- RIGHT SIDE (4 cols): Rake Matrix, Diagnostics, and Tools -->
+<section class="lg:col-span-4 space-y-space-md">
+<!-- 1. Coach Position Matrix -->
+<div class="rounded-xl bg-surface-container-low p-space-lg shadow-lg space-y-space-md">
+<div class="flex items-center justify-between">
+<div class="space-y-0.5">
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-bold">Rake Layout Matrix</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Forward Direction (Engine Leading) • 22 Coaches</p>
+</div>
+<a class="font-label-sm text-label-sm text-telemetry-cyan hover:underline flex items-center gap-0.5" href="#">
+<span>Layout Map</span>
+<span class="material-symbols-outlined text-[14px]">open_in_new</span>
+</a>
+</div>
+<!-- Coach Visual Strip -->
+<div class="p-space-sm rounded-lg bg-surface-container-lowest overflow-x-auto space-y-space-xs">
+<div class="flex items-center gap-1.5 min-w-[340px] pb-1">
+<!-- Loco -->
+<div class="px-2.5 py-3 rounded bg-surface-container-high flex flex-col items-center justify-center min-w-[48px] text-on-surface-variant font-mono">
+<span class="material-symbols-outlined text-[18px] text-telemetry-cyan">electric_bolt</span>
+<span class="font-label-sm text-label-sm">ENG</span>
+</div>
+<!-- EOG -->
+<div class="px-2 py-3 rounded bg-surface-container flex flex-col items-center justify-center min-w-[38px] text-on-surface-variant font-mono">
+<span class="font-label-sm text-label-sm">EOG</span>
+</div>
+<!-- B1 -->
+<div class="px-2 py-3 rounded bg-surface-container-high flex flex-col items-center justify-center min-w-[38px] text-on-surface-variant font-mono">
+<span class="font-label-sm text-label-sm text-telemetry-cyan">B1</span>
+<span class="font-label-sm text-label-sm opacity-50">3A</span>
+</div>
+<!-- B2 -->
+<div class="px-2 py-3 rounded bg-surface-container-high flex flex-col items-center justify-center min-w-[38px] text-on-surface-variant font-mono">
+<span class="font-label-sm text-label-sm text-telemetry-cyan">B2</span>
+<span class="font-label-sm text-label-sm opacity-50">3A</span>
+</div>
+<!-- B3 -->
+<div class="px-2 py-3 rounded bg-surface-container-high flex flex-col items-center justify-center min-w-[38px] text-on-surface-variant font-mono">
+<span class="font-label-sm text-label-sm text-telemetry-cyan">B3</span>
+<span class="font-label-sm text-label-sm opacity-50">3A</span>
+</div>
+<!-- B4 (TARGET / MY COACH) -->
+<div class="px-2 py-3 rounded bg-secondary-container/20 flex flex-col items-center justify-center min-w-[48px] shadow-[0_0_14px_rgba(238,152,0,0.4)] font-mono scale-105">
+<span class="font-label-md text-label-md text-secondary font-bold">B4</span>
+<span class="font-label-sm text-label-sm text-secondary">MINE</span>
+</div>
+<!-- B5 -->
+<div class="px-2 py-3 rounded bg-surface-container-high flex flex-col items-center justify-center min-w-[38px] text-on-surface-variant font-mono">
+<span class="font-label-sm text-label-sm text-telemetry-cyan">B5</span>
+<span class="font-label-sm text-label-sm opacity-50">3A</span>
+</div>
+<!-- A1 -->
+<div class="px-2 py-3 rounded bg-surface-container flex flex-col items-center justify-center min-w-[38px] text-on-surface-variant font-mono">
+<span class="font-label-sm text-label-sm text-on-surface">A1</span>
+<span class="font-label-sm text-label-sm opacity-50">2A</span>
+</div>
+<!-- A2 -->
+<div class="px-2 py-3 rounded bg-surface-container flex flex-col items-center justify-center min-w-[38px] text-on-surface-variant font-mono">
+<span class="font-label-sm text-label-sm text-on-surface">A2</span>
+<span class="font-label-sm text-label-sm opacity-50">2A</span>
+</div>
+</div>
+</div>
+<!-- Target Berth Detail Banner -->
+<div class="p-space-sm rounded-lg bg-surface-container flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-[22px]">airline_seat_recline_extra</span>
+<div>
+<span class="font-label-md text-label-md text-on-surface font-bold block">Target Coach: B4 (Berth 34, Side Lower)</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Approximated Platform Halt: Near Pillar 9</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-telemetry-cyan text-[18px]">verified_user</span>
+</div>
+</div>
+<!-- 2. 30-Day Historical Punctuality Analytics -->
+<div class="rounded-xl bg-surface-container-low p-space-lg shadow-lg space-y-space-md">
+<div class="flex items-center justify-between">
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-bold">Historical Punctuality</h2>
+<span class="px-2.5 py-0.5 rounded-full bg-status-confirmed/20 text-status-confirmed font-label-sm text-label-sm font-bold">
+              30-Day Score
+            </span>
+</div>
+<div class="flex items-center gap-space-md p-space-sm rounded-lg bg-surface-container-lowest">
+<!-- SVG Circular Gauge -->
+<div class="relative w-20 h-20 shrink-0 flex items-center justify-center">
+<svg class="w-full h-full -rotate-90" viewbox="0 0 36 36">
+<path class="text-surface-container-high" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3.5"></path>
+<path class="text-status-confirmed" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="96, 100" stroke-linecap="round" stroke-width="3.5"></path>
+</svg>
+<div class="absolute flex flex-col items-center">
+<span class="font-headline-sm text-headline-sm text-on-surface font-extrabold font-mono">96%</span>
+</div>
+</div>
+<div class="space-y-0.5">
+<div class="font-label-md text-label-md text-status-confirmed font-bold">Consistently High Priority</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Average destination delay over the past month is under 12 minutes.</p>
+</div>
+</div>
+<!-- Last 7 Runs Delay Bar Profile -->
+<div class="space-y-space-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant block uppercase tracking-wider">Past 7 Runs Delay Profile</span>
+<div class="grid grid-cols-7 gap-1 text-center font-mono">
+<div class="space-y-1">
+<div class="h-14 bg-surface-container-lowest rounded flex items-end justify-center p-1">
+<div class="w-full bg-status-confirmed rounded-sm h-[90%]"></div>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant block">Mon</span>
+<span class="font-label-sm text-label-sm text-status-confirmed">0m</span>
+</div>
+<div class="space-y-1">
+<div class="h-14 bg-surface-container-lowest rounded flex items-end justify-center p-1">
+<div class="w-full bg-status-confirmed rounded-sm h-[80%]"></div>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant block">Tue</span>
+<span class="font-label-sm text-label-sm text-status-confirmed">4m</span>
+</div>
+<div class="space-y-1">
+<div class="h-14 bg-surface-container-lowest rounded flex items-end justify-center p-1">
+<div class="w-full bg-status-rac-tatkal rounded-sm h-[50%]"></div>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant block">Wed</span>
+<span class="font-label-sm text-label-sm text-status-rac-tatkal">18m</span>
+</div>
+<div class="space-y-1">
+<div class="h-14 bg-surface-container-lowest rounded flex items-end justify-center p-1">
+<div class="w-full bg-status-confirmed rounded-sm h-[85%]"></div>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant block">Thu</span>
+<span class="font-label-sm text-label-sm text-status-confirmed">2m</span>
+</div>
+<div class="space-y-1">
+<div class="h-14 bg-surface-container-lowest rounded flex items-end justify-center p-1">
+<div class="w-full bg-status-confirmed rounded-sm h-[95%]"></div>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant block">Fri</span>
+<span class="font-label-sm text-label-sm text-status-confirmed">0m</span>
+</div>
+<div class="space-y-1">
+<div class="h-14 bg-surface-container-lowest rounded flex items-end justify-center p-1">
+<div class="w-full bg-status-confirmed rounded-sm h-[70%]"></div>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant block">Sat</span>
+<span class="font-label-sm text-label-sm text-status-confirmed">8m</span>
+</div>
+<div class="space-y-1">
+<div class="h-14 bg-surface-container-lowest rounded flex items-end justify-center p-1">
+<div class="w-full bg-telemetry-cyan rounded-sm h-[95%] shadow-[0_0_8px_#38BDF8]"></div>
+</div>
+<span class="font-label-sm text-label-sm text-telemetry-cyan font-bold block">Today</span>
+<span class="font-label-sm text-label-sm text-telemetry-cyan font-bold">0m</span>
+</div>
+</div>
+</div>
+</div>
+<!-- 3. En-Route Passenger Tools -->
+<div class="rounded-xl bg-surface-container-low p-space-lg shadow-lg space-y-space-md">
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-bold">Passenger Assistance Toolkit</h2>
+<div class="space-y-space-sm">
+<!-- Tool 1: Emergency / RailMadad -->
+<a class="flex items-center justify-between p-space-md rounded-lg bg-surface-container hover:bg-surface-container-high transition-all" href="tel:139">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded bg-status-waitlist/20 text-status-waitlist flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[20px]">sos</span>
+</div>
+<div>
+<span class="font-label-md text-label-md text-on-surface font-bold block">RailMadad Helpline (139)</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">24x7 Security, Medical &amp; Pantry complaints</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-[18px]">chevron_right</span>
+</a>
+<!-- Tool 2: Share Tracking Link -->
+<button class="w-full flex items-center justify-between p-space-md rounded-lg bg-surface-container hover:bg-surface-container-high transition-all text-left" id="share-journey-btn">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded bg-telemetry-cyan/20 text-telemetry-cyan flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[20px]">share_location</span>
+</div>
+<div>
+<span class="font-label-md text-label-md text-on-surface font-bold block">Share Journey Telemetry</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Live WhatsApp / SMS link for family</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-[18px]">send</span>
+</button>
+<!-- Tool 3: e-Catering Order -->
+<div class="flex items-center justify-between p-space-md rounded-lg bg-surface-container hover:bg-surface-container-high transition-all">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded bg-status-rac-tatkal/20 text-status-rac-tatkal flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[20px]">restaurant</span>
+</div>
+<div>
+<span class="font-label-md text-label-md text-on-surface font-bold block">E-Catering at Cuttack (CTC)</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Order dinner delivered to Berth B4 before 20:15</span>
+</div>
+</div>
+<button class="px-2.5 py-1 rounded bg-secondary-container/20 text-secondary hover:bg-secondary-container/30 font-label-sm text-label-sm font-bold">
+                Order
+              </button>
+</div>
+</div>
+<div class="p-space-sm rounded-lg bg-surface-container-lowest flex items-center justify-between font-label-sm text-label-sm text-on-surface-variant">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px] text-telemetry-cyan">cell_tower</span>
+              GPS Satellites Locked: 14/16
+            </span>
+<span class="font-mono text-status-confirmed">Accuracy: ± 3.2m</span>
+</div>
+</div>
+</section>
+</div>
+<!-- Bottom Section: Cinematic En-Route Highlights -->
+<section class="grid grid-cols-1 md:grid-cols-2 gap-space-md pt-space-sm">
+<!-- Photo Card 1: River Crossing -->
+<div class="relative rounded-xl overflow-hidden shadow-lg h-52 group">
+<div class="bg-cover bg-center w-full h-full transition-transform duration-700 group-hover:scale-105" data-alt="Cinematic night perspective of a modern passenger superfast train crossing a sprawling railway bridge over the wide Mahanadi river under deep blue twilight sky with railway signaling telemetry lights reflecting in water" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAUzaXCWDrXGqTA3i46Mh_gZlUPAQ6mLsYDyKbf-WnI-Z4cXWGojxji3NqiR8vbhKQ1TF_tdZ6nMIGeJx1_FualQI7risdR7q6tCGFN88tUojeq2ZHj8-G-rO7PEcr57JpFkW6NDuhhdXGBOTUyBZ67lyQkkHIxxmzrTyQpau2E3Jm9LxFuETE3QHN2YlJKtl18WDjMBUkU4TzdsajZu-z9wDZQCGrKk1Fk2gvR1Dx1')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-base via-surface-base/60 to-transparent p-space-lg flex flex-col justify-end">
+<div class="flex items-center gap-2 mb-1">
+<span class="px-2 py-0.5 rounded bg-telemetry-cyan/30 text-telemetry-cyan font-label-sm text-label-sm font-bold tracking-wide">
+              UPCOMING LANDMARK
+            </span>
+<span class="text-on-surface-variant font-label-sm text-label-sm">In approx. 1h 45m</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-extrabold">Mahanadi Rail Bridge Crossing</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-1">Longest engineering span on the Kharagpur–Visakhapatnam electrified high-density corridor.</p>
+</div>
+</div>
+<!-- Photo Card 2: Onboard Pantry & Amenities -->
+<div class="relative rounded-xl overflow-hidden shadow-lg h-52 group">
+<div class="bg-cover bg-center w-full h-full transition-transform duration-700 group-hover:scale-105" data-alt="Interior of an Indian Railways modern high speed train coach pantry with glowing overhead ambient blue and amber LED lights and warm food trays being prepared for dinner service at night" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB0L1B2meqG7CJi2DR7-RIprDY5InFzYVnZbr2daUd3S5S35brPlN-73iRKvgX4Z0j586XsxbYf22Pj8iJR2ZCYnBYf-NYt1_qXC_quzQkyHAGhP5FTl9un-tGxCB-ijWm8yfTHpKW89e1GY1Nd8Gbv-t1oiHKrWcmddIcdnGgRhzcBTFYwLRj9zs4Ess652_GZuf6EYOlLSpJAcysVVqFCcYTltrdVouSpVjhKdfnJ')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-base via-surface-base/60 to-transparent p-space-lg flex flex-col justify-end">
+<div class="flex items-center gap-2 mb-1">
+<span class="px-2 py-0.5 rounded bg-status-confirmed/30 text-status-confirmed font-label-sm text-label-sm font-bold tracking-wide">
+              ONBOARD AMENITY ACTIVE
+            </span>
+<span class="text-on-surface-variant font-label-sm text-label-sm">Starts 20:00</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-extrabold">Pantry Car Hot Dinner Service</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-1">Standard IRCTC vegetarian thali and continental trays served direct to coach seats between Balasore and Cuttack.</p>
+</div>
+</div>
+</section>
+</div>
+<!-- Interactive Telemetry JavaScript -->
+<script>
+    (function initTelemetry() {
+      const syncBtn = document.getElementById('sync-telemetry-btn');
+      const counterEl = document.getElementById('sync-counter');
+      const speedEl = document.getElementById('live-speed-display');
+      const shareBtn = document.getElementById('share-journey-btn');
+
+      if (syncBtn && counterEl) {
+        syncBtn.addEventListener('click', function() {
+          const syncIcon = syncBtn.querySelector('.material-symbols-outlined');
+          if (syncIcon) syncIcon.classList.add('animate-spin');
+          
+          setTimeout(function() {
+            if (syncIcon) syncIcon.classList.remove('animate-spin');
+            counterEl.textContent = 'Just now';
+            if (speedEl) {
+              const currentSpeed = parseInt(speedEl.textContent, 10);
+              const variance = Math.floor(Math.random() * 5) - 2;
+              const newSpeed = Math.min(130, Math.max(105, currentSpeed + variance));
+              speedEl.textContent = newSpeed;
+            }
+          }, 800);
+        });
+      }
+
+      if (shareBtn) {
+        shareBtn.addEventListener('click', function() {
+          if (navigator.share) {
+            navigator.share({
+              title: 'RailFlow Live: 12841 Coromandel Express',
+              text: 'Track my train live on RailFlow RTIS Satellite Radar: Currently near Balasore (On Time, 118 km/h).',
+              url: window.location.href
+            }).catch(function() {});
+          } else {
+            alert('Live Tracking Link copied to clipboard: https://railflow.cris.in/track/12841');
+          }
+        });
+      }
+    })();
+  </script>
+</div></main><footer class="w-full bg-surface-container-lowest mt-space-xl shadow-[0_-1px_16px_rgba(0,0,0,0.4)]"><div class="max-w-[1320px] mx-auto px-margin py-space-xl"><div class="grid grid-cols-1 md:grid-cols-4 gap-space-lg mb-space-xl"><div class="md:col-span-2 space-y-space-sm"><div class="flex items-center gap-space-xs"><span class="font-headline-sm text-headline-sm text-on-surface font-extrabold">Rail<span class="text-telemetry-cyan">Flow</span></span><div class="w-1.5 h-1.5 rounded-full bg-telemetry-cyan shadow-[0_0_8px_#38BDF8]"></div></div><p class="font-body-sm text-body-sm text-on-surface-variant max-w-md">Next-generation enterprise transit platform engineered for Indian Railways booking telemetry, live predictive GPS tracking, and intelligent berth allocation.</p><div class="flex items-center gap-space-sm pt-space-xs"><div class="flex items-center gap-1.5 px-space-sm py-1 rounded-full bg-surface-container text-status-confirmed font-label-sm text-label-sm"><span class="material-symbols-outlined text-[16px]">verified</span><span>Authorized IRCTC Modern Partner</span></div><div class="flex items-center gap-1.5 px-space-sm py-1 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm"><span class="material-symbols-outlined text-[16px]">lock</span><span>256-bit SSL Telemetry</span></div></div></div><div class="space-y-space-xs"><span class="font-label-lg text-label-lg text-on-surface uppercase tracking-wider block">Passenger Support</span><ul class="space-y-space-xs font-body-sm text-body-sm text-on-surface-variant"><li class="flex items-center gap-1.5 text-on-surface"><div class="w-2 h-2 rounded-full bg-status-confirmed animate-pulse"></div><span>RailMadad Helpline 139 (Live)</span></li><li><a class="hover:text-telemetry-cyan transition-colors" data-path="passenger-rights" href="#">Passenger Rights Charter</a></li><li><a class="hover:text-telemetry-cyan transition-colors" data-path="refund-rules" href="#">TDR &amp; Refund Rules</a></li><li><a class="hover:text-telemetry-cyan transition-colors" data-path="tatkal-guidelines" href="#">Tatkal &amp; Quota Guidelines</a></li></ul></div><div class="space-y-space-xs"><span class="font-label-lg text-label-lg text-on-surface uppercase tracking-wider block">Governance &amp; Data</span><ul class="space-y-space-xs font-body-sm text-body-sm text-on-surface-variant"><li><a class="hover:text-telemetry-cyan transition-colors" data-path="security-architecture" href="#">Security Architecture</a></li><li><a class="hover:text-telemetry-cyan transition-colors" data-path="privacy-policy" href="#">Privacy Policy</a></li><li><a class="hover:text-telemetry-cyan transition-colors" data-path="terms-of-service" href="#">Terms of Service</a></li><li><a class="hover:text-telemetry-cyan transition-colors" data-path="api-telemetry" href="#">CRIS Telemetry API Access</a></li></ul></div></div><div class="pt-space-lg flex flex-col sm:flex-row items-center justify-between gap-space-sm font-label-sm text-label-sm text-on-surface-variant"><p>© 2026 RailFlow Systems India Private Limited. All rights reserved.</p><div class="flex items-center gap-space-md"><span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px] text-telemetry-cyan">sensors</span> CR-WR-NR Grid Synchronized</span><span>v4.18.2-prod</span></div></div></div></footer></body></html>

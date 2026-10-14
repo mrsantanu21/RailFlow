@@ -1,0 +1,296 @@
+// RailFlow Railway Reservation System - Prisma Schema
+// SQLite compatible schema (enums represented as Strings with domain validation in application layer)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ─── User & Auth ────────────────────────────────────────────────────────────
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  phone        String?
+  role         String   @default("USER") // USER | ADMIN
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  bookings     Booking[]
+  sessions     Session[]
+
+  @@map("users")
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+// ─── Railway Master Data ─────────────────────────────────────────────────────
+
+model Station {
+  id        String  @id @default(cuid())
+  code      String  @unique  // e.g. "NDLS", "HWH", "NJP"
+  name      String           // e.g. "New Delhi"
+  fullName  String           // e.g. "New Delhi Junction"
+  zone      String           // e.g. "Northern Railway"
+  state     String           // e.g. "Delhi"
+  isActive  Boolean @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  routeStations RouteStation[]
+
+  @@map("stations")
+}
+
+model Train {
+  id          String    @id @default(cuid())
+  number      String    @unique  // e.g. "12302"
+  name        String              // e.g. "Howrah Rajdhani Express"
+  type        String              // VANDE_BHARAT | RAJDHANI | SHATABDI | DURONTO | SUPERFAST | MAIL_EXPRESS | PASSENGER
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  schedules   TrainSchedule[]
+
+  @@map("trains")
+}
+
+model Route {
+  id        String   @id @default(cuid())
+  name      String              // e.g. "Howrah–New Delhi via Gaya"
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  stations  RouteStation[]
+  schedules TrainSchedule[]
+
+  @@map("routes")
+}
+
+model RouteStation {
+  id                 String   @id @default(cuid())
+  routeId            String
+  stationId          String
+  sequence           Int      // 1, 2, 3... (determines route order)
+  arrivalOffsetMin   Int?     // minutes from origin departure (null for origin)
+  departureOffsetMin Int?    // minutes from origin departure (null for terminus)
+  distanceKm         Int      // km from origin
+  platformNumber     String?
+  haltDurationMin    Int      @default(2)
+
+  route   Route   @relation(fields: [routeId], references: [id])
+  station Station @relation(fields: [stationId], references: [id])
+
+  boardingAllocations  SeatAllocation[] @relation("BoardingStation")
+  alightingAllocations SeatAllocation[] @relation("AlightingStation")
+
+  @@unique([routeId, sequence])
+  @@unique([routeId, stationId])
+  @@map("route_stations")
+}
+
+model TrainSchedule {
+  id            String  @id @default(cuid())
+  trainId       String
+  routeId       String
+  // Operating days bitmask: bit 0 = Monday, bit 6 = Sunday
+  // e.g., 0b1111111 = 127 = runs daily, 0b0111110 = Mon-Fri only
+  runningDays   Int
+  departureTime String  // "HH:MM" in 24h format from origin
+  isActive      Boolean @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  train Train @relation(fields: [trainId], references: [id])
+  route Route @relation(fields: [routeId], references: [id])
+  runs  TrainRun[]
+  fareRules FareRule[]
+
+  @@map("train_schedules")
+}
+
+model TrainRun {
+  id         String   @id @default(cuid())
+  scheduleId String
+  runDate    String   // "YYYY-MM-DD" (journey start date)
+  status     String   @default("SCHEDULED") // SCHEDULED | RUNNING | COMPLETED | CANCELLED
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  schedule TrainSchedule @relation(fields: [scheduleId], references: [id])
+  coaches  Coach[]
+  bookings Booking[]
+
+  @@unique([scheduleId, runDate])
+  @@map("train_runs")
+}
+
+// ─── Inventory ───────────────────────────────────────────────────────────────
+
+model Coach {
+  id          String    @id @default(cuid())
+  trainRunId  String
+  coachNumber String    // e.g. "B1", "B2", "A1", "S1"
+  classType   String    // ONE_AC | TWO_AC | THREE_AC | SLEEPER | CHAIR_CAR | EXEC_CHAIR | SECOND
+  totalSeats  Int
+  createdAt   DateTime  @default(now())
+
+  trainRun    TrainRun  @relation(fields: [trainRunId], references: [id])
+  seats       Seat[]
+
+  @@unique([trainRunId, coachNumber])
+  @@map("coaches")
+}
+
+model Seat {
+  id          String    @id @default(cuid())
+  coachId     String
+  seatNumber  Int       // 1, 2, 3...
+  berthType   String    // LOWER | MIDDLE | UPPER | SIDE_LOWER | SIDE_UPPER | WINDOW | AISLE
+  createdAt   DateTime  @default(now())
+
+  coach       Coach     @relation(fields: [coachId], references: [id])
+  allocations SeatAllocation[]
+
+  @@unique([coachId, seatNumber])
+  @@map("seats")
+}
+
+// ─── Fare ────────────────────────────────────────────────────────────────────
+
+model FareRule {
+  id                 String    @id @default(cuid())
+  scheduleId         String
+  classType          String    // ONE_AC | TWO_AC | THREE_AC | SLEEPER | CHAIR_CAR | EXEC_CHAIR | SECOND
+  baseFarePaise      Int       // base fare in paise (rupees * 100)
+  reservationCharge  Int       @default(6000)   // paise (Rs.60)
+  superfastCharge    Int       @default(4500)   // paise (Rs.45)
+  cateringCharge     Int       @default(0)      // paise
+  gstPercent         Int       @default(5)      // percentage
+  isActive           Boolean   @default(true)
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  schedule TrainSchedule @relation(fields: [scheduleId], references: [id])
+
+  @@unique([scheduleId, classType])
+  @@map("fare_rules")
+}
+
+// ─── Booking ─────────────────────────────────────────────────────────────────
+
+model Booking {
+  id                  String        @id @default(cuid())
+  pnr                 String        @unique
+  userId              String
+  trainRunId          String
+  fromRouteStationSeq Int           // sequence number of boarding station
+  toRouteStationSeq   Int           // sequence number of alighting station
+  classType           String        // ONE_AC | TWO_AC | THREE_AC | SLEEPER | CHAIR_CAR | EXEC_CHAIR | SECOND
+  status              String        @default("PENDING") // PENDING | CONFIRMED | CANCELLED | FAILED
+  paymentStatus       String        @default("PENDING") // PENDING | SUCCESS | FAILED | REFUNDED
+  totalFarePaise      Int
+  quotaType           String        @default("GENERAL") // GENERAL | TATKAL | PREMIUM_TATKAL | LADIES | SENIOR_CITIZEN
+  createdAt           DateTime      @default(now())
+  updatedAt           DateTime      @updatedAt
+
+  user         User              @relation(fields: [userId], references: [id])
+  trainRun     TrainRun          @relation(fields: [trainRunId], references: [id])
+  passengers   BookingPassenger[]
+  transactions PaymentTransaction[]
+  cancellation Cancellation?
+
+  @@map("bookings")
+}
+
+model BookingPassenger {
+  id              String   @id @default(cuid())
+  bookingId       String
+  passengerIndex  Int      // 1, 2, 3... (order in booking)
+  name            String
+  age             Int
+  gender          String   // MALE | FEMALE | OTHER
+  berthPreference String?  // LOWER | MIDDLE | UPPER | SIDE_LOWER | SIDE_UPPER | WINDOW | AISLE
+  createdAt       DateTime @default(now())
+
+  booking    Booking        @relation(fields: [bookingId], references: [id])
+  allocation SeatAllocation?
+
+  @@map("booking_passengers")
+}
+
+model SeatAllocation {
+  id                    String           @id @default(cuid())
+  bookingPassengerId    String           @unique
+  seatId                String
+  boardingRouteStationId  String
+  alightingRouteStationId String
+  boardingSeq           Int              // cached for fast overlap queries
+  alightingSeq          Int
+  status                String           @default("LOCKED") // LOCKED | CONFIRMED | RELEASED
+  lockedUntil           DateTime?        // TTL for LOCKED state
+  allocatedCoach        String           // e.g. "B4"
+  allocatedSeatNumber   Int
+  createdAt             DateTime         @default(now())
+  updatedAt             DateTime         @updatedAt
+
+  bookingPassenger BookingPassenger @relation(fields: [bookingPassengerId], references: [id])
+  seat             Seat             @relation(fields: [seatId], references: [id])
+  boardingStation  RouteStation     @relation("BoardingStation", fields: [boardingRouteStationId], references: [id])
+  alightingStation RouteStation     @relation("AlightingStation", fields: [alightingRouteStationId], references: [id])
+
+  @@map("seat_allocations")
+}
+
+// ─── Payment ─────────────────────────────────────────────────────────────────
+
+model PaymentTransaction {
+  id              String        @id @default(cuid())
+  bookingId       String
+  idempotencyKey  String        @unique
+  amountPaise     Int
+  method          String        @default("UPI") // UPI | NET_BANKING | DEBIT_CARD | CREDIT_CARD | WALLET
+  status          String        @default("PENDING") // PENDING | SUCCESS | FAILED | REFUNDED
+  transactionRef  String?       // simulated transaction reference
+  failureReason   String?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  booking Booking @relation(fields: [bookingId], references: [id])
+
+  @@map("payment_transactions")
+}
+
+// ─── Cancellation ────────────────────────────────────────────────────────────
+
+model Cancellation {
+  id               String   @id @default(cuid())
+  bookingId        String   @unique
+  requestedAt      DateTime @default(now())
+  processedAt      DateTime?
+  deductionPercent Int      // 0–100
+  refundAmountPaise Int
+  reason           String?
+  refundStatus     String   @default("PENDING") // PENDING | PROCESSED | FAILED
+
+  booking Booking @relation(fields: [bookingId], references: [id])
+
+  @@map("cancellations")
+}
