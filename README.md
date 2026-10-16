@@ -25,6 +25,35 @@ RailFlow models the complete lifecycle of passenger railway operations, from tim
 
 ---
 
+## 📸 Screenshots
+
+### 1. Homepage & Intelligent Train Search
+Modern hero interface featuring rapid station-to-station route search, departure date selectors, travel quotas, and responsive navigation.
+
+![Homepage & Search](screenshots/homepage.png)
+
+### 2. Train Search Results & Timetable Matrix
+Timetable results displaying scheduled departure/arrival times, travel durations, stops, and available travel classes.
+
+![Train Search Results](screenshots/train-search.png)
+
+### 3. Visual Seat Availability & Coach Matrix
+Interactive coach interior map enabling visual berth selection across coupes (Lower, Middle, Upper, Side Berths) with dynamic fare computation.
+
+![Seat Availability Matrix](screenshots/seat-matrix.png)
+
+### 4. PNR Status & Digital Boarding Pass
+Reservation lookup console displaying passenger manifests, booking confirmation states, and digital boarding passes.
+
+![PNR & Trips](screenshots/pnr-trips.png)
+
+### 5. Fleet Analytics & Operations Dashboard
+Administrative management console for monitoring national bookings, active express fleet rakes, user registrations, and system throughput.
+
+![Admin Operations Dashboard](screenshots/admin-dashboard.png)
+
+---
+
 ## 2. Architecture & Data Flow
 
 ```
