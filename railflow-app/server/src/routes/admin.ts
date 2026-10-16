@@ -4,6 +4,7 @@ import { prisma } from '../db/prisma';
 import { validate } from '../middleware/validate';
 import { requireAdmin } from '../middleware/auth';
 import { createError } from '../middleware/errorHandler';
+import { indianRailwayService } from '../services/indianRailwayService';
 
 const router = Router();
 router.use(requireAdmin);
@@ -412,4 +413,83 @@ router.get('/reports/popular-routes', async (_req, res, next) => {
   } catch (err) { next(err); }
 });
 
+// ─── DATA HEALTH & SOURCE STATUS ─────────────────────────────────────────────
+router.get(['/data-health', '/reports/data-health'], async (_req, res, next) => {
+  try {
+    const [
+      prismaStations,
+      prismaTrains,
+      prismaRoutes,
+      prismaSchedules,
+      dataSources,
+      syncRuns,
+    ] = await Promise.all([
+      prisma.station.count(),
+      prisma.train.count(),
+      prisma.route.count(),
+      prisma.trainSchedule.count(),
+      prisma.dataSource.findMany(),
+      prisma.syncRun.findMany({ take: 5, orderBy: { startedAt: 'desc' } }),
+    ]);
+
+    const irStationCount = indianRailwayService.getStationCount();
+    const irTrainCount = indianRailwayService.getTrainCount();
+    const allStations = indianRailwayService.getAllStations();
+    const quarantinedCount = allStations.filter(s => s.code.startsWith('XX-') || s.code.startsWith('YY-')).length;
+
+    res.json({
+      success: true,
+      data: {
+        status: 'HEALTHY',
+        timestamp: new Date().toISOString(),
+        summary: {
+          totalStationsAvailable: irStationCount + prismaStations,
+          totalTrainsAvailable: irTrainCount + prismaTrains,
+          quarantinedStationsCount: quarantinedCount,
+          activeCityClustersCount: 17,
+        },
+        sources: [
+          {
+            name: 'INDIAN_RAILWAY_OPEN_DATA',
+            type: 'OPEN_DATASET',
+            provider: 'prasenjit-27/Indian-Railway-Data (MIT License)',
+            recordCounts: {
+              stations: irStationCount,
+              trains: irTrainCount,
+              quarantined: quarantinedCount,
+            },
+            status: 'ACTIVE',
+            isOfficial: false,
+            notes: 'Static scheduled timetable. Live PRS booking inventory requires official CRIS gateway.',
+          },
+          {
+            name: 'RAILFLOW_PRISMA_MASTER',
+            type: 'PRISMA_SQLITE',
+            provider: 'RailFlow Internal High-Concurrency Database',
+            recordCounts: {
+              stations: prismaStations,
+              trains: prismaTrains,
+              routes: prismaRoutes,
+              schedules: prismaSchedules,
+            },
+            status: 'ACTIVE',
+            isOfficial: true,
+            notes: 'High-concurrency SQLite dev.db with serializable isolation & coach inventory.',
+          },
+        ],
+        syncRuns,
+        features: {
+          canonicalStationSearch: true,
+          aliasTranslation: true,
+          connectingJourneys: true,
+          nearbyStationRecommendations: true,
+          alternateDateSuggestions: true,
+          quarantineFiltering: true,
+        },
+      },
+    });
+  } catch (err) { next(err); }
+});
+
 export default router;
+

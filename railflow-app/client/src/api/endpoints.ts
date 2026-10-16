@@ -25,6 +25,39 @@ export async function getStation(idOrCode: string): Promise<Station> {
   return res.data?.data?.station;
 }
 
+export interface AdvancedSearchResult {
+  trains: TrainSearchResult[];
+  alternatives?: {
+    nearbyStations?: Array<{
+      stationCode: string;
+      stationName: string;
+      role: 'ORIGIN' | 'DESTINATION';
+      relation: string;
+      directTrainsCount: number;
+      searchUrl: string;
+    }>;
+    alternateDates?: Array<{
+      date: string;
+      dayLabel: string;
+      directTrainsCount: number;
+      isToday: boolean;
+      searchUrl: string;
+    }>;
+    connectingJourneysAvailable?: boolean;
+    connectingJourneys?: Array<{
+      id: string;
+      transferStation: { code: string; name: string };
+      totalDurationMin: number;
+      layoverMin: number;
+      leg1: any;
+      leg2: any;
+    }>;
+  };
+  fromStation?: { code: string; name: string };
+  toStation?: { code: string; name: string };
+  meta?: any;
+}
+
 export async function searchTrains(params: {
   fromStationCode: string;
   toStationCode: string;
@@ -35,6 +68,24 @@ export async function searchTrains(params: {
 }): Promise<TrainSearchResult[]> {
   const res = await apiClient.get('/trains', { params });
   return res.data?.data?.results || [];
+}
+
+export async function searchTrainsWithAlternatives(params: {
+  fromStationCode: string;
+  toStationCode: string;
+  date: string;
+  classType?: string;
+  quota?: string;
+  passCount?: number;
+}): Promise<AdvancedSearchResult> {
+  const res = await apiClient.get('/trains', { params });
+  return {
+    trains: res.data?.data?.results || res.data?.data?.trains || [],
+    alternatives: res.data?.data?.alternatives,
+    fromStation: res.data?.data?.fromStation,
+    toStation: res.data?.data?.toStation,
+    meta: res.data?.data?.meta,
+  };
 }
 
 export async function lookupTrains(q: string): Promise<any[]> {

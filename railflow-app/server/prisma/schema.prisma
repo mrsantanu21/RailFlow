@@ -42,13 +42,17 @@ model Session {
 // ─── Railway Master Data ─────────────────────────────────────────────────────
 
 model Station {
-  id        String  @id @default(cuid())
-  code      String  @unique  // e.g. "NDLS", "HWH", "NJP"
-  name      String           // e.g. "New Delhi"
-  fullName  String           // e.g. "New Delhi Junction"
-  zone      String           // e.g. "Northern Railway"
-  state     String           // e.g. "Delhi"
-  isActive  Boolean @default(true)
+  id        String   @id @default(cuid())
+  code      String   @unique  // e.g. "NDLS", "HWH", "NJP"
+  name      String            // e.g. "New Delhi"
+  fullName  String            // e.g. "New Delhi Junction"
+  zone      String            // e.g. "Northern Railway"
+  state     String            // e.g. "Delhi"
+  city      String?           // e.g. "Delhi"
+  aliases   String?           // e.g. "Delhi, Dilli, New Delhi"
+  latitude  Float?
+  longitude Float?
+  isActive  Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -294,3 +298,41 @@ model Cancellation {
 
   @@map("cancellations")
 }
+
+// ─── Data Sources & Sync Management ──────────────────────────────────────────
+
+model DataSource {
+  id          String    @id @default(cuid())
+  name        String    @unique // e.g. "INDIAN_RAILWAY_OPEN_DATA", "DATAMEET_RAILWAYS", "LOCAL_SEEDED"
+  type        String    // OPEN_DATASET | PRISMA_SEED | UPSTREAM_API
+  description String?
+  version     String?
+  lastSyncAt  DateTime?
+  recordCount Int       @default(0)
+  status      String    @default("ACTIVE") // ACTIVE | STALE | ERROR
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  syncRuns    SyncRun[]
+
+  @@map("data_sources")
+}
+
+model SyncRun {
+  id             String     @id @default(cuid())
+  dataSourceId   String
+  version        String?
+  source         String     // URL or file path
+  status         String     @default("SUCCESS") // SUCCESS | PARTIAL | FAILED
+  startedAt      DateTime   @default(now())
+  completedAt    DateTime?
+  insertedCount  Int        @default(0)
+  updatedCount   Int        @default(0)
+  rejectedCount  Int        @default(0)
+  errorLog       String?    // JSON or text error summary
+
+  dataSource     DataSource @relation(fields: [dataSourceId], references: [id], onDelete: Cascade)
+
+  @@map("sync_runs")
+}
+

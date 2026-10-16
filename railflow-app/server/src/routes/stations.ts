@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { prisma } from '../db/prisma';
 import { validate } from '../middleware/validate';
 import { datameetService } from '../services/datameet';
+import { indianRailwayService } from '../services/indianRailwayService';
 
 const router = Router();
 
@@ -11,13 +12,18 @@ const searchSchema = z.object({
   limit: z.coerce.number().min(1).max(100).default(20),
 });
 
+import { canonicalStationService, isMalformedOrQuarantinedStation } from '../services/canonicalStationService';
+
 // ─── GET /api/stations?q=<search> ────────────────────────────────────────────
 router.get('/', validate(searchSchema, 'query'), async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { q, limit } = req.query as { q?: string; limit: string };
     const limitNum = parseInt(limit as string) || 20;
 
-    const stations = await prisma.station.findMany({
+    const canonicalResults = await canonicalStationService.searchStations(q || '', limitNum);
+
+    // Also check local Prisma stations
+    const prismaStations = await prisma.station.findMany({
       where: {
         isActive: true,
         ...(q ? {
@@ -30,45 +36,84 @@ router.get('/', validate(searchSchema, 'query'), async (req: Request, res: Respo
         } : {}),
       },
       take: limitNum,
-      orderBy: { code: 'asc' },
     });
 
-    const seen = new Set(stations.map((s) => s.code.toUpperCase()));
-    let catalogStations: Array<{
-      id: string;
-      code: string;
-      name: string;
-      fullName: string;
-      zone: string;
-      state: string;
-      isActive: boolean;
-    }> = [];
-    try {
-      const extra = await datameetService.searchStations(q || '', limitNum);
-      catalogStations = extra
-        .filter((s) => !seen.has(s.code.toUpperCase()))
-        .slice(0, Math.max(0, limitNum - stations.length))
-        .map((s) => ({
+    const seen = new Set<string>();
+    const finalStations: Array<any> = [];
+
+    // Prioritize exact code matches first
+    const qUpper = (q || '').trim().toUpperCase();
+
+    // Add exact code match from prisma if present
+    for (const p of prismaStations) {
+      if (p.code.toUpperCase() === qUpper && !isMalformedOrQuarantinedStation(p.code, p.name)) {
+        seen.add(p.code.toUpperCase());
+        finalStations.push({
+          id: p.id,
+          code: p.code,
+          name: p.name,
+          fullName: p.fullName || `${p.name} (${p.code})`,
+          zone: p.zone,
+          state: p.state,
+          city: (p as any).city || p.state,
+          isActive: p.isActive,
+          provenance: {
+            source: 'PRISMA_SEED',
+            isOfficial: true,
+            providerName: 'RailFlow Master Database',
+          },
+        });
+      }
+    }
+
+    // Add ranked canonical stations (which filters out XX-*, YY-*, and ranks cities/aliases properly)
+    for (const s of canonicalResults) {
+      if (!seen.has(s.code.toUpperCase()) && finalStations.length < limitNum) {
+        seen.add(s.code.toUpperCase());
+        finalStations.push({
           id: s.id,
           code: s.code,
           name: s.name,
           fullName: s.fullName,
           zone: s.zone,
           state: s.state,
+          city: s.city,
           isActive: s.isActive,
-        }));
-    } catch (err) {
-      console.warn('[stations] DataMeet catalog unavailable:', (err as Error).message);
+          provenance: s.provenance,
+        });
+      }
+    }
+
+    // If still have room, add remaining Prisma stations
+    for (const p of prismaStations) {
+      if (!seen.has(p.code.toUpperCase()) && finalStations.length < limitNum && !isMalformedOrQuarantinedStation(p.code, p.name)) {
+        seen.add(p.code.toUpperCase());
+        finalStations.push({
+          id: p.id,
+          code: p.code,
+          name: p.name,
+          fullName: p.fullName || `${p.name} (${p.code})`,
+          zone: p.zone,
+          state: p.state,
+          city: (p as any).city || p.state,
+          isActive: p.isActive,
+          provenance: {
+            source: 'PRISMA_SEED',
+            isOfficial: true,
+            providerName: 'RailFlow Master Database',
+          },
+        });
+      }
     }
 
     res.json({
       success: true,
       data: {
-        stations: [...stations, ...catalogStations],
+        stations: finalStations,
         meta: {
-          localCount: stations.length,
-          catalogCount: catalogStations.length,
-          catalogProvenance: datameetService.isEnabled() ? datameetService.getProvenance() : null,
+          total: finalStations.length,
+          canonicalCount: canonicalResults.length,
+          query: q || '',
         },
       },
     });
@@ -89,6 +134,30 @@ router.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
     });
 
     if (!station) {
+      try {
+        const irStation = await indianRailwayService.getStation(id);
+        if (irStation) {
+          res.json({
+            success: true,
+            data: {
+              station: {
+                id: irStation.id,
+                code: irStation.code,
+                name: irStation.name,
+                fullName: irStation.fullName,
+                zone: irStation.zone,
+                state: irStation.state,
+                isActive: irStation.isActive,
+              },
+              provenance: irStation.provenance,
+            },
+          });
+          return;
+        }
+      } catch (err) {
+        console.warn('[stations] Indian Railway station lookup failed:', (err as Error).message);
+      }
+
       try {
         const catalogStation = await datameetService.getStation(id);
         if (catalogStation) {

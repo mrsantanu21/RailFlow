@@ -1,12 +1,15 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import type { AiChatMessage, AiTrainSummary, AiStatus } from '../../types/ai';
 import { sendAiChat, getAiStatus } from '../../api/aiEndpoints';
 import { searchTrains } from '../../api/endpoints';
+import { type AiSearchContext, getSuggestedPrompts } from '../../utils/aiPrompts';
 
 interface AiAssistantPanelProps {
   isOpen: boolean;
   onClose: () => void;
   onPopulateSearch?: (params: { from: string; to: string; date?: string }) => void;
+  searchContext?: AiSearchContext;
 }
 
 const INITIAL_WELCOME_MESSAGE: AiChatMessage = {
@@ -81,44 +84,13 @@ function renderFormattedText(content: string): React.ReactNode {
   );
 }
 
-const SUGGESTED_PROMPTS = [
-  {
-    icon: 'train',
-    label: 'Find trains between two stations',
-    prompt: 'Find trains from New Delhi to Varanasi for tomorrow',
-  },
-  {
-    icon: 'currency_rupee',
-    label: 'Find the cheapest available option',
-    prompt: 'What is the cheapest train and class from New Delhi to Kanpur?',
-  },
-  {
-    icon: 'schedule',
-    label: 'Compare departure and arrival times',
-    prompt: 'Compare morning and evening departure times from NDLS to BSB',
-  },
-  {
-    icon: 'receipt_long',
-    label: 'Explain a fare breakdown',
-    prompt: 'Explain the fare breakdown for Vande Bharat 22436 Chair Car from NDLS to BSB',
-  },
-  {
-    icon: 'confirmation_number',
-    label: 'Check my RailFlow booking',
-    prompt: 'Check the status of my latest RailFlow booking',
-  },
-  {
-    icon: 'verified_user',
-    label: "Check a train's running status",
-    prompt: 'What is the running status of train 22436 Vande Bharat Express?',
-  },
-];
-
 export const AiAssistantPanel: React.FC<AiAssistantPanelProps> = ({
   isOpen,
   onClose,
   onPopulateSearch,
+  searchContext,
 }) => {
+  const [searchParams] = useSearchParams();
   const [messages, setMessages] = useState<AiChatMessage[]>([INITIAL_WELCOME_MESSAGE]);
   const [inputText, setInputText] = useState('');
   const [loading, setLoading] = useState(false);
@@ -127,6 +99,41 @@ export const AiAssistantPanel: React.FC<AiAssistantPanelProps> = ({
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const previousActiveElementRef = useRef<HTMLElement | null>(null);
+
+  const effectiveContext: AiSearchContext = React.useMemo(() => ({
+    fromCode: searchContext?.fromCode || searchParams.get('from')?.toUpperCase() || undefined,
+    fromName: searchContext?.fromName || (searchParams.get('from')?.toUpperCase() === 'NDLS' ? 'New Delhi' : undefined),
+    toCode: searchContext?.toCode || searchParams.get('to')?.toUpperCase() || undefined,
+    toName: searchContext?.toName || (searchParams.get('to')?.toUpperCase() === 'BSB' ? 'Varanasi' : undefined),
+    date: searchContext?.date || searchParams.get('date') || undefined,
+    quota: searchContext?.quota || searchParams.get('quota')?.toUpperCase() || 'GENERAL',
+    passengers: searchContext?.passengers || parseInt(searchParams.get('passengers') || '1', 10) || 1,
+  }), [searchContext, searchParams]);
+
+  const suggestedPrompts = React.useMemo(
+    () => getSuggestedPrompts(effectiveContext),
+    [effectiveContext]
+  );
+
+  // Retain trigger reference on open for accessible focus restoration on close
+  useEffect(() => {
+    if (isOpen) {
+      previousActiveElementRef.current =
+        (document.activeElement as HTMLElement) ||
+        document.getElementById('ai-assistant-trigger');
+    }
+  }, [isOpen]);
+
+  const handleCloseAndReturnFocus = useCallback(() => {
+    onClose();
+    setTimeout(() => {
+      const el = previousActiveElementRef.current || document.getElementById('ai-assistant-trigger');
+      if (el && typeof el.focus === 'function') {
+        el.focus();
+      }
+    }, 50);
+  }, [onClose]);
 
   // Fetch AI status on mount
   useEffect(() => {
@@ -146,15 +153,15 @@ export const AiAssistantPanel: React.FC<AiAssistantPanelProps> = ({
     }
   }, [messages, loading, isOpen, isMinimized]);
 
-  // Close AI panel on Escape key press
+  // Close AI panel on Escape key press with accessible focus return
   useEffect(() => {
     if (!isOpen) return;
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+      if (e.key === 'Escape') handleCloseAndReturnFocus();
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen, onClose]);
+  }, [isOpen, handleCloseAndReturnFocus]);
 
   const generateLocalAiFallback = async (queryText: string): Promise<AiChatMessage> => {
     const normalized = queryText.toLowerCase();
@@ -282,18 +289,23 @@ export const AiAssistantPanel: React.FC<AiAssistantPanelProps> = ({
 
     // Cheapest option intent
     if (normalized.includes('cheap') || normalized.includes('fare') || normalized.includes('price')) {
+      const fromStr = effectiveContext.fromName || effectiveContext.fromCode || 'New Delhi (NDLS)';
+      const toStr = effectiveContext.toName || effectiveContext.toCode || 'Varanasi (BSB)';
+      const fromCd = effectiveContext.fromCode || 'NDLS';
+      const toCd = effectiveContext.toCode || 'BSB';
+
       return {
         id: `fallback_${Date.now()}`,
         sender: 'assistant',
-        text: `**RailFlow Fare Explorer (Local Catalogue Mode)**\n\nBased on RailFlow's prototype inventory for **New Delhi (NDLS) → Varanasi (BSB)**:\n\n* **15128 Kashi Vishwanath Express**: Sleeper class at **₹ 440** (Most economical)\n* **12560 Shiv Ganga Express**: Sleeper at **₹ 480** / 3A at **₹ 1,240**\n* **22436 Vande Bharat Express**: AC Chair Car at **₹ 1,750** (Fastest 8h transit)\n\nClick below to apply this route to the search page.`,
+        text: `**RailFlow Fare Explorer (Local Catalogue Mode)**\n\nBased on RailFlow's prototype inventory for **${fromStr} → ${toStr}**:\n\n* **Most economical option**: Check Sleeper / Second Sitting classes on standard express services.\n* **Fastest corridor transit**: Check AC Chair Car or 3-Tier AC on Superfast / Vande Bharat runs.\n\nClick below to apply this route to the search page.`,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         isError: false,
         isFallback: true,
         actionParams: {
-          from: 'NDLS',
-          to: 'BSB',
-          date: tomorrowStr,
-          label: 'Search NDLS → BSB on Portal',
+          from: fromCd,
+          to: toCd,
+          date: effectiveContext.date || tomorrowStr,
+          label: `Search ${fromCd} → ${toCd} on Portal`,
         },
       };
     }
@@ -472,10 +484,10 @@ export const AiAssistantPanel: React.FC<AiAssistantPanelProps> = ({
 
           <button
             type="button"
-            onClick={onClose}
+            onClick={handleCloseAndReturnFocus}
             title="Close assistant"
             aria-label="Close assistant"
-            className="p-1.5 text-slate-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+            className="p-1.5 text-slate-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
           >
             <span className="material-symbols-outlined text-[18px]">close</span>
           </button>
@@ -665,7 +677,7 @@ export const AiAssistantPanel: React.FC<AiAssistantPanelProps> = ({
                   Try asking me about:
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                  {SUGGESTED_PROMPTS.map((item, idx) => (
+                  {suggestedPrompts.map((item, idx) => (
                     <button
                       key={idx}
                       type="button"

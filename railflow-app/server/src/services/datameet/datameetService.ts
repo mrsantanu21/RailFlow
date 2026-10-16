@@ -319,8 +319,9 @@ export class DatameetService {
     const train = snap.trainsByNumber.get(trainNumber);
     const fromStop = stops[fromIdx];
     const toStop = stops[toIdx];
+    const segmentStops = stops.slice(fromIdx, toIdx + 1);
     const duration = minutesBetween(fromStop.departure || fromStop.arrival, fromStop.day, toStop.arrival || toStop.departure, toStop.day);
-    const routeStops = stops.map((stop, index) => ({
+    const routeStops = segmentStops.map((stop, index) => ({
       sequence: index + 1,
       stationCode: stop.stationCode,
       stationName: stop.stationName || stop.stationCode,
@@ -329,6 +330,15 @@ export class DatameetService {
       distanceKm: null as number | null,
       platform: null as string | null,
     }));
+
+    // Only assign distance if the requested segment matches the full route of the train.
+    // Intermediate segments (e.g. NDLS -> BSB on a Delhi-Puri or Delhi-Dibrugarh train)
+    // must not invent or inherit the entire multi-thousand km journey distance.
+    const isFullTrainRoute =
+      Boolean(train?.fromStationCode && train?.toStationCode) &&
+      fromStop.stationCode === train?.fromStationCode &&
+      toStop.stationCode === train?.toStationCode;
+    const distanceKm = isFullTrainRoute ? (train?.distanceKm ?? null) : null;
 
     return {
       scheduleId: `datameet:${trainNumber}`,
@@ -344,7 +354,7 @@ export class DatameetService {
       route: {
         id: `datameet-route:${trainNumber}`,
         name: `${fromStop.stationCode} – ${toStop.stationCode}`,
-        totalStops: stops.length,
+        totalStops: segmentStops.length,
         stops: routeStops,
       },
       fromStation: { code: fromStop.stationCode, name: fromStop.stationName || fromStop.stationCode, sequence: fromIdx + 1 },
@@ -357,13 +367,13 @@ export class DatameetService {
         departureTime: fromStop.departure,
         arrivalTime: toStop.arrival,
         durationMinutes: duration,
-        distanceKm: train?.distanceKm ?? null,
+        distanceKm,
         runDate: date,
       },
       departureTime: fromStop.departure,
       arrivalTime: toStop.arrival,
       durationMin: duration,
-      distanceKm: train?.distanceKm ?? null,
+      distanceKm,
       runningDays: 'Unknown (static catalog has no running-days field)',
       classes: {},
       journeyDate: date,
@@ -389,7 +399,7 @@ export class DatameetService {
       route: {
         id: `datameet-route:${train.number}`,
         name: `${train.fromStationCode} – ${train.toStationCode}`,
-        totalStops: train.coordinates?.length || 2,
+        totalStops: null as any, // Stop count unavailable from train master alone; avoid invented number
         stops: [
           {
             sequence: 1,

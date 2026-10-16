@@ -13,6 +13,9 @@ import {
 } from '../services/inventoryService';
 import { datameetService } from '../services/datameet';
 import { DATAMEET_LIMITATIONS, PROVENANCE_LABELS } from '../services/datameet/types';
+import { indianRailwayService, IR_DATASET_LIMITATIONS } from '../services/indianRailwayService';
+import { canonicalStationService } from '../services/canonicalStationService';
+import { railSearchService } from '../services/railSearchService';
 
 // ─── Schemas ─────────────────────────────────────────────────────────────────
 const searchSchema = z.object({
@@ -33,8 +36,12 @@ const searchSchema = z.object({
 // ─── GET /api/trains and /api/trains/search ──────────────────────────────────
 router.get(['/', '/search'], validate(searchSchema, 'query'), async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const from = ((req.query.from || req.query.fromStationCode) as string).toUpperCase();
-    const to = ((req.query.to || req.query.toStationCode) as string).toUpperCase();
+    const fromRaw = ((req.query.from || req.query.fromStationCode) as string).toUpperCase();
+    const toRaw = ((req.query.to || req.query.toStationCode) as string).toUpperCase();
+    const fromRes = canonicalStationService.resolveCanonicalStationCode(fromRaw);
+    const toRes = canonicalStationService.resolveCanonicalStationCode(toRaw);
+    const from = fromRes.code || fromRaw;
+    const to = toRes.code || toRaw;
     const date = req.query.date as string;
     const passCount = parseInt(((req.query.passengers || req.query.passCount || '1') as string)) || 1;
 
@@ -62,36 +69,29 @@ router.get(['/', '/search'], validate(searchSchema, 'query'), async (req: Reques
       return;
     }
 
-    if (!fromStation || !toStation) {
-      res.json({
-        success: true,
-        data: [],
-        meta: { total: 0, from, to, date },
-      });
-      return;
-    }
-
-    const routes = await prisma.route.findMany({
-      where: {
-        isActive: true,
-        stations: {
-          some: { stationId: fromStation.id },
-        },
-      },
-      include: {
-        stations: {
-          include: { station: true },
-          orderBy: { sequence: 'asc' },
-        },
-        schedules: {
-          where: { isActive: true },
-          include: {
-            train: true,
-            fareRules: true,
+    const routes = (fromStation && toStation)
+      ? await prisma.route.findMany({
+          where: {
+            isActive: true,
+            stations: {
+              some: { stationId: fromStation.id },
+            },
           },
-        },
-      },
-    });
+          include: {
+            stations: {
+              include: { station: true },
+              orderBy: { sequence: 'asc' },
+            },
+            schedules: {
+              where: { isActive: true },
+              include: {
+                train: true,
+                fareRules: true,
+              },
+            },
+          },
+        })
+      : [];
 
     // Filter routes where fromStation appears BEFORE toStation
     const validSchedules: Array<{
@@ -99,24 +99,28 @@ router.get(['/', '/search'], validate(searchSchema, 'query'), async (req: Reques
       route: typeof routes[0];
       fromRS: typeof routes[0]['stations'][0];
       toRS: typeof routes[0]['stations'][0];
+      fromStn: NonNullable<typeof fromStation>;
+      toStn: NonNullable<typeof toStation>;
     }> = [];
 
-    for (const route of routes) {
-      const fromRS = route.stations.find(rs => rs.stationId === fromStation.id);
-      const toRS = route.stations.find(rs => rs.stationId === toStation.id);
+    if (fromStation && toStation) {
+      for (const route of routes) {
+        const fromRS = route.stations.find(rs => rs.stationId === fromStation.id);
+        const toRS = route.stations.find(rs => rs.stationId === toStation.id);
 
-      if (!fromRS || !toRS) continue;
-      if (fromRS.sequence >= toRS.sequence) continue; // wrong order
+        if (!fromRS || !toRS) continue;
+        if (fromRS.sequence >= toRS.sequence) continue; // wrong order
 
-      for (const schedule of route.schedules) {
-        if (scheduleRunsOnDate(schedule.runningDays, date)) {
-          validSchedules.push({ schedule, route, fromRS, toRS });
+        for (const schedule of route.schedules) {
+          if (scheduleRunsOnDate(schedule.runningDays, date)) {
+            validSchedules.push({ schedule, route, fromRS, toRS, fromStn: fromStation, toStn: toStation });
+          }
         }
       }
     }
 
     // For each valid schedule, ensure persisted TrainRun & inventory exists for date, then check availability
-    const results = await Promise.all(validSchedules.map(async ({ schedule, route, fromRS, toRS }) => {
+    const results = await Promise.all(validSchedules.map(async ({ schedule, route, fromRS, toRS, fromStn, toStn }) => {
       const trainRun = await ensureTrainRunInventory(schedule.id, date);
 
       // Calculate availability per class
@@ -190,13 +194,13 @@ router.get(['/', '/search'], validate(searchSchema, 'query'), async (req: Reques
             platform: rs.platformNumber,
           })),
         },
-        fromStation: { code: fromStation.code, name: fromStation.name, sequence: fromRS.sequence },
-        toStation: { code: toStation.code, name: toStation.name, sequence: toRS.sequence },
+        fromStation: { code: fromStn.code, name: fromStn.name, sequence: fromRS.sequence },
+        toStation: { code: toStn.code, name: toStn.name, sequence: toRS.sequence },
         journey: {
-          fromStation: fromStation.code,
-          toStation: toStation.code,
-          fromStationName: fromStation.name,
-          toStationName: toStation.name,
+          fromStation: fromStn.code,
+          toStation: toStn.code,
+          fromStationName: fromStn.name,
+          toStationName: toStn.name,
           departureTime: depTime,
           arrivalTime: arrTime,
           durationMinutes: durationMin,
@@ -233,6 +237,13 @@ router.get(['/', '/search'], validate(searchSchema, 'query'), async (req: Reques
       },
     }));
 
+    let irResults: any[] = [];
+    try {
+      irResults = await indianRailwayService.searchTrainsBetween(from, to, date);
+    } catch (err) {
+      console.warn('[trains] Indian Railway dataset search unavailable:', (err as Error).message);
+    }
+
     let catalogResults: Awaited<ReturnType<typeof datameetService.searchTrainsBetween>> = [];
     try {
       catalogResults = await datameetService.searchTrainsBetween(from, to, date);
@@ -241,31 +252,70 @@ router.get(['/', '/search'], validate(searchSchema, 'query'), async (req: Reques
     }
 
     const localNumbers = new Set(localResults.map((r) => r.train.number));
+    const extraIr = irResults.filter((r) => !localNumbers.has(r.train.number));
+    for (const r of extraIr) localNumbers.add(r.train.number);
+
     const extraCatalog = catalogResults.filter((r) => !localNumbers.has(r.train.number));
-    const merged = [...localResults, ...extraCatalog];
+    const merged = [...localResults, ...extraIr, ...extraCatalog];
     merged.sort((a, b) => String(a.departureTime || '99:99').localeCompare(String(b.departureTime || '99:99')));
 
-    if (!fromStation && !toStation && merged.length === 0) {
-      next(createError(`Source station '${from}' not found`, 404, 'STATION_NOT_FOUND'));
-      return;
+    if (merged.length === 0) {
+      const [fromExists, toExists] = await Promise.all([
+        fromStation ? true : indianRailwayService.getStation(from).then(Boolean),
+        toStation ? true : indianRailwayService.getStation(to).then(Boolean),
+      ]);
+
+      if (!fromExists) {
+        next(createError(`Source station '${from}' not found`, 404, 'STATION_NOT_FOUND'));
+        return;
+      }
+      if (!toExists) {
+        next(createError(`Destination station '${to}' not found`, 404, 'STATION_NOT_FOUND'));
+        return;
+      }
     }
 
-    const catalogFrom = extraCatalog[0]?.fromStation;
-    const catalogTo = extraCatalog[0]?.toStation;
+    const irFrom = await indianRailwayService.getStation(from);
+    const irTo = await indianRailwayService.getStation(to);
+    const catalogFrom = extraIr[0]?.fromStation || extraCatalog[0]?.fromStation;
+    const catalogTo = extraIr[0]?.toStation || extraCatalog[0]?.toStation;
+
+    let alternatives: any = { nearbyStations: [], alternateDates: [], connectingJourneys: [] };
+    try {
+      alternatives = await (railSearchService as any).buildAlternatives({
+        fromCode: from,
+        fromName: fromStation?.name || catalogFrom?.name || irFrom?.name || from,
+        toCode: to,
+        toName: toStation?.name || catalogTo?.name || irTo?.name || to,
+        dateStr: date,
+        directCount: merged.length,
+        directOnly: true,
+      });
+    } catch {
+      // Non-blocking fallback for alternatives
+    }
 
     res.json({
       success: true,
       data: {
         trains: merged,
         results: merged,
-        fromStation: fromStation || (catalogFrom ? { code: catalogFrom.code, name: catalogFrom.name } : { code: from, name: from }),
-        toStation: toStation || (catalogTo ? { code: catalogTo.code, name: catalogTo.name } : { code: to, name: to }),
+        fromStation: fromStation || (catalogFrom ? { code: catalogFrom.code, name: catalogFrom.name } : (irFrom ? { code: irFrom.code, name: irFrom.name } : { code: from, name: from })),
+        toStation: toStation || (catalogTo ? { code: catalogTo.code, name: catalogTo.name } : (irTo ? { code: irTo.code, name: irTo.name } : { code: to, name: to })),
         journeyDate: date,
         passengers: passCount,
+        alternatives,
         meta: {
+          total: merged.length,
           localCount: localResults.length,
-          catalogCount: extraCatalog.length,
-          catalogLimitations: DATAMEET_LIMITATIONS,
+          catalogCount: extraIr.length + extraCatalog.length,
+          catalogLimitations: extraIr.length > 0 ? IR_DATASET_LIMITATIONS : DATAMEET_LIMITATIONS,
+          canonicalResolution: {
+            fromResolvedFrom: fromRes.isAlias ? fromRes.originalInput : undefined,
+            toResolvedFrom: toRes.isAlias ? toRes.originalInput : undefined,
+            fromIsAlias: fromRes.isAlias,
+            toIsAlias: toRes.isAlias,
+          },
         },
       },
     });
@@ -308,10 +358,43 @@ router.get('/lookup', async (req: Request, res: Response, next: NextFunction) =>
       },
       take: 10,
     });
+
+    const localNumbers = new Set(trains.map((t) => t.number));
+    let irLookupTrains: any[] = [];
+    try {
+      const extraIr = await indianRailwayService.lookupTrains(q, 10);
+      for (const t of extraIr) {
+        if (!localNumbers.has(t.trainNumber)) {
+          localNumbers.add(t.trainNumber);
+          irLookupTrains.push({
+            id: `ir:${t.trainNumber}`,
+            number: t.trainNumber,
+            name: t.trainName,
+            type: t.type || 'EXPRESS',
+            isActive: true,
+            source: 'INDIAN_RAILWAY_OPEN_DATA',
+            bookable: false,
+            schedules: [
+              {
+                isActive: true,
+                route: {
+                  stations: [
+                    { station: { code: t.source.code, name: t.source.name } },
+                    { station: { code: t.destination.code, name: t.destination.name } },
+                  ],
+                },
+              },
+            ],
+          });
+        }
+      }
+    } catch (err) {
+      console.warn('[trains] Indian Railway lookup unavailable:', (err as Error).message);
+    }
+
     let catalogTrains: any[] = [];
     try {
       const extra = await datameetService.lookupTrains(q, 10);
-      const localNumbers = new Set(trains.map((t) => t.number));
       catalogTrains = extra
         .filter((t) => !localNumbers.has(t.number))
         .map((t) => ({
@@ -338,7 +421,23 @@ router.get('/lookup', async (req: Request, res: Response, next: NextFunction) =>
       console.warn('[trains] DataMeet lookup unavailable:', (err as Error).message);
     }
 
-    res.json({ success: true, data: { trains: [...trains, ...catalogTrains] } });
+    const allLookup = [...trains, ...irLookupTrains, ...catalogTrains];
+    const qClean = q.replace(/\s+/g, '').toUpperCase();
+    allLookup.sort((a, b) => {
+      const aNum = String(a.number).trim().toUpperCase();
+      const bNum = String(b.number).trim().toUpperCase();
+      const aExact = aNum === qClean;
+      const bExact = bNum === qClean;
+      if (aExact && !bExact) return -1;
+      if (!aExact && bExact) return 1;
+      const aPrefix = aNum.startsWith(qClean);
+      const bPrefix = bNum.startsWith(qClean);
+      if (aPrefix && !bPrefix) return -1;
+      if (!aPrefix && bPrefix) return 1;
+      return 0;
+    });
+
+    res.json({ success: true, data: { trains: allLookup.slice(0, 10) } });
   } catch (err) {
     next(err);
   }

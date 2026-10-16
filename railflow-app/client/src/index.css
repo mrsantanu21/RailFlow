@@ -57,6 +57,22 @@
     --color-status-cancelled: #6b7280;
     --color-telemetry-cyan: #38bdf8;
 
+    /* RailFlow Enterprise Centralized Tokens */
+    --rail-navy: #1E3A8A;
+    --rail-navy-dark: #00236F;
+    --rail-amber: #F59E0B;
+    --rail-amber-soft: #FFFBEB;
+    --rail-green: #10B981;
+    --rail-green-soft: #ECFDF5;
+    --rail-cyan: #06B6D4;
+    --rail-cyan-soft: #ECFEFF;
+    --rail-canvas: #F6F8FC;
+    --rail-surface: #FFFFFF;
+    --rail-surface-soft: #EFF4FF;
+    --rail-text: #0F172A;
+    --rail-text-muted: #475569;
+    --rail-border: #CBD5E1;
+
     /* shadcn/ui semantic tokens (mapped to Material Design 3 palette) */
     --color-primary-foreground: var(--color-on-primary, #ffffff);
     --color-secondary-foreground: var(--color-on-secondary, #ffffff);

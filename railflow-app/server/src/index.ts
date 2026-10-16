@@ -19,7 +19,9 @@ import paymentsRouter from './routes/payments';
 import adminRouter from './routes/admin';
 import trackingRouter from './routes/tracking';
 import aiRouter from './routes/ai';
+import searchRouter from './routes/search';
 import { startHoldCleanupJob, stopHoldCleanupJob } from './services/holdCleanupService';
+import { indianRailwayService } from './services/indianRailwayService';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -138,6 +140,7 @@ app.use('/api/payments', paymentsRouter);
 app.use('/api/admin', adminRouter);
 app.use('/api/tracking', trackingRouter);
 app.use('/api/ai', aiRouter);
+app.use('/api/search', searchRouter);
 
 // ─── System Health Check ──────────────────────────────────────────────────────
 app.get('/api/health', async (_req, res) => {
@@ -182,6 +185,11 @@ if (process.env.NODE_ENV !== 'test') {
 
     // Initialize periodic expired seat hold cleanup
     startHoldCleanupJob();
+
+    // Pre-load Indian Railway dataset in background
+    indianRailwayService.ensureLoaded().catch((err) => {
+      console.warn('[Server] Pre-loading Indian Railway dataset encountered error:', err.message);
+    });
   });
 
   const handleShutdown = (signal: string) => {
