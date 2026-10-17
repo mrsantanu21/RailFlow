@@ -288,7 +288,7 @@ export const TrainResultCard: React.FC<TrainResultCardProps> = ({
                     }
                   }}
                   onClick={() => onSelectClass(trainResult.trainRunId, cType)}
-                  className={`p-3 rounded-2xl cursor-pointer transition-all border flex flex-col justify-between min-w-[130px] sm:min-w-[150px] flex-1 max-w-[220px] focus:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
+                  className={`p-3 rounded-2xl cursor-pointer transition-[color,background-color,border-color,box-shadow] duration-[180ms] ease-[cubic-bezier(0.2,0.8,0.2,1)] motion-reduce:transition-none border flex flex-col justify-between min-w-[130px] sm:min-w-[150px] flex-1 max-w-[220px] focus:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
                     isSelected
                       ? 'bg-primary-fixed/25 border-primary ring-2 ring-primary shadow-xs'
                       : 'bg-surface-container-low border-outline-variant/30 hover:bg-surface-container'
@@ -374,7 +374,7 @@ export const TrainResultCard: React.FC<TrainResultCardProps> = ({
             type="button"
             aria-expanded={isRouteOpen}
             onClick={() => onToggleRoute(trainResult.trainRunId)}
-            className="text-xs font-bold text-primary hover:underline flex items-center gap-1 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded px-1 py-0.5"
+            className="text-xs font-bold text-primary hover:underline flex items-center gap-1 cursor-pointer transition-colors duration-[180ms] motion-reduce:transition-none focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded px-1 py-0.5"
           >
             {isRouteOpen ? <ChevronUp className="w-4 h-4" aria-hidden="true" /> : <ChevronDown className="w-4 h-4" aria-hidden="true" />}
             <span>{isRouteOpen ? 'Hide Route Schedule' : 'View Route Schedule'}</span>
@@ -382,7 +382,7 @@ export const TrainResultCard: React.FC<TrainResultCardProps> = ({
 
           <a
             href={`/tracking?train=${trainResult.train.number}`}
-            className="text-xs font-bold text-secondary hover:underline flex items-center gap-1 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary rounded px-1 py-0.5"
+            className="text-xs font-bold text-secondary hover:underline flex items-center gap-1 transition-colors duration-[180ms] motion-reduce:transition-none focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary rounded px-1 py-0.5"
             title={`Track ${trainResult.train.number} on Live Map`}
           >
             <Radar className="w-4 h-4" aria-hidden="true" />
@@ -390,13 +390,13 @@ export const TrainResultCard: React.FC<TrainResultCardProps> = ({
           </a>
         </div>
 
-        {/* Right Actions */}
-        <div className="flex items-center gap-2">
+        {/* Right Actions — ml-auto keeps this right-aligned even when wrapping to a new line on small screens */}
+        <div className="flex items-center gap-2 ml-auto">
           {/* View Seat Matrix action (available for all trains) */}
           <button
             type="button"
             onClick={() => onOpenSeatMatrix(trainResult, effectiveClass)}
-            className="px-4 py-2.5 rounded-full bg-surface-container-high hover:bg-surface-container-highest text-primary font-bold text-xs border border-outline-variant/30 flex items-center gap-1.5 cursor-pointer transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            className="px-4 py-2.5 rounded-full bg-surface-container-high hover:bg-surface-container-highest text-primary font-bold text-xs border border-outline-variant/30 flex items-center gap-1.5 cursor-pointer transition-[color,background-color,box-shadow] duration-[180ms] ease-[cubic-bezier(0.2,0.8,0.2,1)] motion-reduce:transition-none focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             title="Open Coach Berth Matrix"
           >
             <Grid3X3 className="w-3.5 h-3.5" aria-hidden="true" />
@@ -411,7 +411,7 @@ export const TrainResultCard: React.FC<TrainResultCardProps> = ({
               <button
                 type="button"
                 onClick={() => onOpenSandboxBooking(trainResult)}
-                className="px-6 py-2.5 rounded-full bg-amber-500 hover:bg-amber-600 active:bg-amber-700 text-slate-950 font-bold text-xs shadow-sm active:scale-95 transition-all flex items-center gap-1.5 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-2"
+                className="px-6 py-2.5 rounded-full bg-amber-500 hover:bg-amber-600 active:bg-amber-700 text-slate-950 font-bold text-xs shadow-sm active:opacity-90 transition-[color,background-color,box-shadow,opacity] duration-[180ms] ease-[cubic-bezier(0.2,0.8,0.2,1)] motion-reduce:transition-none flex items-center gap-1.5 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-2"
               >
                 <Sparkles className="w-4 h-4" aria-hidden="true" />
                 <span>Quick Sandbox Book</span>
@@ -421,7 +421,7 @@ export const TrainResultCard: React.FC<TrainResultCardProps> = ({
             <button
               type="button"
               onClick={() => onOpenBooking(trainResult)}
-              className="px-6 py-2.5 rounded-full bg-primary hover:bg-primary-container text-on-primary font-bold text-xs shadow-sm active:scale-95 transition-all flex items-center gap-1.5 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+              className="px-6 py-2.5 rounded-full bg-primary hover:bg-primary-container text-on-primary font-bold text-xs shadow-md hover:shadow-lg active:opacity-90 transition-[color,background-color,box-shadow,opacity] duration-[180ms] ease-[cubic-bezier(0.2,0.8,0.2,1)] motion-reduce:transition-none flex items-center gap-1.5 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
             >
               <span>Book Now ({effectiveClass})</span>
               <ArrowRight className="w-4 h-4" aria-hidden="true" />

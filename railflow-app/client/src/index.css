@@ -73,6 +73,12 @@
     --rail-text-muted: #475569;
     --rail-border: #CBD5E1;
 
+    /* Motion Design Tokens */
+    --railflow-motion-duration: 180ms;
+    --railflow-motion-easing: cubic-bezier(0.2, 0.8, 0.2, 1);
+    --railflow-motion-duration-fast: 120ms;
+    --railflow-motion-duration-slow: 240ms;
+
     /* shadcn/ui semantic tokens (mapped to Material Design 3 palette) */
     --color-primary-foreground: var(--color-on-primary, #ffffff);
     --color-secondary-foreground: var(--color-on-secondary, #ffffff);
@@ -320,7 +326,9 @@
   animation-name: slide-up;
 }
 
-/* Accessibility: Respect system prefers-reduced-motion */
+/* Accessibility: Respect system prefers-reduced-motion.
+   Keep interaction states (color, opacity, focus rings) but disable
+   decorative motion (transforms, layout animations, pulses). */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -329,5 +337,11 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+
+  /* Disable decorative pulses but preserve outline visibility */
+  .radar-sweep,
+  [class*='animate-pulse'] {
+    animation: none !important;
   }
 }

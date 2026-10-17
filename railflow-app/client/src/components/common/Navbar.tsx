@@ -203,6 +203,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAuth, onOpenAiAssistant })
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label={mobileMenuOpen ? 'Close Menu' : 'Open Menu'}
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-nav-menu"
             className={`lg:hidden p-2 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 ${
               isHome
                 ? 'text-slate-200 hover:bg-white/10'
@@ -219,6 +221,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAuth, onOpenAiAssistant })
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
         <div
+          id="mobile-nav-menu"
           className={`lg:hidden px-4 pt-2 pb-4 border-b flex flex-col gap-2 ${
             isHome
               ? 'bg-slate-950/95 border-white/10 text-white'

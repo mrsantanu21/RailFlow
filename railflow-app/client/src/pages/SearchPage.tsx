@@ -989,6 +989,11 @@ export const SearchPage: React.FC<SearchPageProps> = ({ onRequireAuth, onNavigat
                     <div className="min-w-0 flex-1">
                       <input
                         type="text"
+                        role="combobox"
+                        aria-autocomplete="list"
+                        aria-expanded={showFromDropdown}
+                        aria-haspopup="listbox"
+                        aria-controls="from-station-listbox"
                         placeholder="Search origin station or code..."
                         aria-label="Origin station"
                         value={fromQuery}
@@ -1015,13 +1020,20 @@ export const SearchPage: React.FC<SearchPageProps> = ({ onRequireAuth, onNavigat
 
                   {/* From Dropdown */}
                   {showFromDropdown && fromSuggestions.length > 0 && (
-                    <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-slate-200 p-2 z-50 max-h-56 overflow-y-auto">
+                    <div
+                      id="from-station-listbox"
+                      role="listbox"
+                      aria-label="Origin station suggestions"
+                      className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-slate-200 p-2 z-50 max-h-56 overflow-y-auto"
+                    >
                       {fromSuggestions.map((s, idx) => {
                         const isHighlighted = idx === fromHighlightedIndex;
                         return (
                           <button
                             key={s.id}
                             type="button"
+                            role="option"
+                            aria-selected={idx === fromHighlightedIndex}
                             onClick={() => {
                               setFromStation(s);
                               setFromCode(s.code);
@@ -1089,6 +1101,11 @@ export const SearchPage: React.FC<SearchPageProps> = ({ onRequireAuth, onNavigat
                     <div className="min-w-0 flex-1">
                       <input
                         type="text"
+                        role="combobox"
+                        aria-autocomplete="list"
+                        aria-expanded={showToDropdown}
+                        aria-haspopup="listbox"
+                        aria-controls="to-station-listbox"
                         placeholder="Search destination station or code..."
                         aria-label="Destination station"
                         value={toQuery}
@@ -1115,13 +1132,20 @@ export const SearchPage: React.FC<SearchPageProps> = ({ onRequireAuth, onNavigat
 
                   {/* To Dropdown */}
                   {showToDropdown && toSuggestions.length > 0 && (
-                    <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-slate-200 p-2 z-50 max-h-56 overflow-y-auto">
+                    <div
+                      id="to-station-listbox"
+                      role="listbox"
+                      aria-label="Destination station suggestions"
+                      className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-slate-200 p-2 z-50 max-h-56 overflow-y-auto"
+                    >
                       {toSuggestions.map((s, idx) => {
                         const isHighlighted = idx === toHighlightedIndex;
                         return (
                           <button
                             key={s.id}
                             type="button"
+                            role="option"
+                            aria-selected={idx === toHighlightedIndex}
                             onClick={() => {
                               setToStation(s);
                               setToCode(s.code);
@@ -1220,6 +1244,7 @@ export const SearchPage: React.FC<SearchPageProps> = ({ onRequireAuth, onNavigat
                   <span className="text-xs font-semibold text-white/90 mr-1.5">Quick Dates:</span>
                   <button
                     type="button"
+                    aria-pressed={daysDiff === 0}
                     onClick={() => handleQuickDate(0)}
                     className={`px-4 py-1.5 rounded-full text-xs transition-all cursor-pointer shadow-xs ${
                       daysDiff === 0
@@ -1231,6 +1256,7 @@ export const SearchPage: React.FC<SearchPageProps> = ({ onRequireAuth, onNavigat
                   </button>
                   <button
                     type="button"
+                    aria-pressed={daysDiff === 1}
                     onClick={() => handleQuickDate(1)}
                     className={`px-4 py-1.5 rounded-full text-xs transition-all cursor-pointer shadow-xs ${
                       daysDiff === 1
@@ -1242,6 +1268,7 @@ export const SearchPage: React.FC<SearchPageProps> = ({ onRequireAuth, onNavigat
                   </button>
                   <button
                     type="button"
+                    aria-pressed={daysDiff === 3}
                     onClick={() => handleQuickDate(3)}
                     className={`px-4 py-1.5 rounded-full text-xs transition-all cursor-pointer shadow-xs ${
                       daysDiff === 3
@@ -1253,6 +1280,7 @@ export const SearchPage: React.FC<SearchPageProps> = ({ onRequireAuth, onNavigat
                   </button>
                   <button
                     type="button"
+                    aria-pressed={daysDiff === 7}
                     onClick={() => handleQuickDate(7)}
                     className={`px-4 py-1.5 rounded-full text-xs transition-all cursor-pointer shadow-xs ${
                       daysDiff === 7
