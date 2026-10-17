@@ -2,7 +2,8 @@
 // SQLite compatible schema (enums represented as Strings with domain validation in application layer)
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
 }
 
 datasource db {

@@ -27,6 +27,11 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 const isProd = process.env.NODE_ENV === 'production';
 
+// ─── Trust proxy for secure cookies behind reverse proxies (Render / Cloudflare)
+if (isProd) {
+  app.set('trust proxy', 1);
+}
+
 // ─── Security middleware ─────────────────────────────────────────────────────
 app.use(
   helmet({
@@ -45,9 +50,43 @@ app.use(
   })
 );
 
+export const getAllowedOrigins = (
+  clientUrlEnv?: string,
+  isProduction: boolean = isProd
+): string[] => {
+  const configured = (clientUrlEnv !== undefined ? clientUrlEnv : (process.env.CLIENT_URL || ''))
+    .split(',')
+    .map((s) => s.trim().replace(/\/$/, ''))
+    .filter(Boolean);
+
+  if (!isProduction) {
+    const devDefaults = ['http://localhost:5173', 'http://127.0.0.1:5173'];
+    return configured.length > 0 ? Array.from(new Set([...configured, ...devDefaults])) : devDefaults;
+  }
+
+  return configured;
+};
+
+export const isOriginAllowed = (
+  origin: string | undefined,
+  clientUrlEnv?: string,
+  isProduction: boolean = isProd
+): boolean => {
+  if (!origin) return true; // Same-origin or non-browser request
+  const normalized = origin.trim().replace(/\/$/, '');
+  const allowed = getAllowedOrigins(clientUrlEnv, isProduction);
+  return allowed.includes(normalized);
+};
+
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || 'http://localhost:5173',
+    origin: (origin, callback) => {
+      if (isOriginAllowed(origin)) {
+        callback(null, true);
+      } else {
+        callback(null, false);
+      }
+    },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
@@ -94,7 +133,7 @@ app.use(
     cookie: {
       httpOnly: true,
       secure: isProd,
-      sameSite: 'lax',
+      sameSite: isProd ? 'none' : 'lax',
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     },
   })

@@ -115,6 +115,7 @@ export interface TypedSearchResponse {
   meta: {
     source: string;
     lastUpdated: string;
+    canonicalRoute?: string;
     canonicalResolution: {
       fromResolvedFrom?: string;
       toResolvedFrom?: string;

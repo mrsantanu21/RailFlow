@@ -1,0 +1,32 @@
+# Render Blueprint Specification for RailFlow API Server
+# Docs: https://render.com/docs/blueprint-spec
+services:
+  - type: web
+    name: railflow-server
+    runtime: node
+    plan: free
+    rootDir: railflow-app/server
+    buildCommand: npm install && npx prisma generate && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: CLIENT_URL
+        sync: false
+      - key: TURSO_DATABASE_URL
+        sync: false
+      - key: TURSO_AUTH_TOKEN
+        sync: false
+      - key: RAILRADAR_API_KEY
+        sync: false
+      - key: RAILRADAR_ENABLED
+        value: "true"
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GEMINI_MODEL
+        value: "gemini-3.7-flash"
