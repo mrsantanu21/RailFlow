@@ -1,7 +1,8 @@
-# Python virtual environment
+# Python virtual environment & microservices
 .venv/
 __pycache__/
 *.pyc
+railflow-app/chukchuk-api/
 
 # Environment & secrets
 .env
