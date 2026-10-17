@@ -1,2 +1,5 @@
-# Cloudflare Pages SPA Routing fallback
-/*    /index.html   200
+# Netlify API Proxy to Render Backend (Status 200 Rewrite)
+/api/*  https://railflow-af7e.onrender.com/api/:splat  200!
+
+# SPA Routing Fallback (React Router)
+/*      /index.html                                     200

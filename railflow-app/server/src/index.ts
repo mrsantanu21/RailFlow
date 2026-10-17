@@ -183,11 +183,17 @@ app.use('/api/search', searchRouter);
 
 // ─── System Health Check ──────────────────────────────────────────────────────
 app.get('/api/health', async (_req, res) => {
-  let dbStatus = 'UP';
+  let dbStatus: 'UP' | 'DOWN' = 'UP';
+  let dbErrorReason: string | undefined;
+
   try {
     await prisma.$queryRawUnsafe('SELECT 1');
-  } catch {
+  } catch (err: any) {
     dbStatus = 'DOWN';
+    const rawMessage: string = err?.message || String(err);
+    // Capture sanitized first line without leaking sensitive tokens or credentials
+    dbErrorReason = rawMessage.split('\n')[0].substring(0, 200).trim();
+    console.error('[Health Check] Database probe failed:', dbErrorReason);
   }
 
   const memory = process.memoryUsage();
@@ -201,6 +207,7 @@ app.get('/api/health', async (_req, res) => {
       database: dbStatus,
       sessionStore: 'ACTIVE',
     },
+    ...(dbErrorReason && { databaseError: dbErrorReason }),
     memory: {
       rssMb: Math.round(memory.rss / (1024 * 1024)),
       heapUsedMb: Math.round(memory.heapUsed / (1024 * 1024)),

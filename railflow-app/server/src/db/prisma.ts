@@ -7,8 +7,10 @@ const globalForPrisma = globalThis as unknown as {
 };
 
 function createPrismaClient(): PrismaClient {
-  const tursoUrl = process.env.TURSO_DATABASE_URL;
-  const tursoAuthToken = process.env.TURSO_AUTH_TOKEN;
+  const rawUrl = process.env.TURSO_DATABASE_URL;
+  const rawToken = process.env.TURSO_AUTH_TOKEN;
+  const tursoUrl = rawUrl?.trim().replace(/^["']|["']$/g, '');
+  const tursoAuthToken = rawToken?.trim().replace(/^["']|["']$/g, '');
   const isProd = process.env.NODE_ENV === 'production';
 
   if (tursoUrl) {
@@ -29,13 +31,13 @@ function createPrismaClient(): PrismaClient {
   }
 
   if (isProd) {
-    console.warn(
-      '[Database Warning] Running in production with local SQLite database (TURSO_DATABASE_URL unset). Ephemeral filesystems will reset upon container restart.'
+    throw new Error(
+      '[Database Error] TURSO_DATABASE_URL is not configured in production. Running with local SQLite on Render will cause silent data loss upon container restart.'
     );
   }
 
   return new PrismaClient({
-    log: isProd ? ['error'] : ['query', 'error', 'warn'],
+    log: ['query', 'error', 'warn'],
   });
 }
 

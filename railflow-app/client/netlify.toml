@@ -1,0 +1,17 @@
+# Netlify Configuration for RailFlow Frontend
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# Forward /api/* requests to the Render backend service
+[[redirects]]
+  from = "/api/*"
+  to = "https://railflow-af7e.onrender.com/api/:splat"
+  status = 200
+  force = true
+
+# Single Page Application (SPA) catch-all route for React Router
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
