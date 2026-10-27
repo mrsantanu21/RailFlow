@@ -1,5 +1,5 @@
-# RailFlow — Modern Railway Reservation & Operations Platform
-
+# RailFlow — Modern Railway Reservation Platform
+its better 
 > **Academic Portfolio Project & Technical Showcase**  
 > RailFlow is an end-to-end railway reservation and operational management web application designed with enterprise-grade TypeScript, Express, React 19, and Prisma.  
 > *Disclaimer: RailFlow is an educational simulation. It is NOT affiliated with Indian Railways, IRCTC, or CRIS, and passes issued are not valid for actual transit.*
