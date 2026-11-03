@@ -17,3 +17,12 @@ dist-ssr/
 # Operating System files
 .DS_Store
 Thumbs.db
+
+# Databases & local lock/WAL files
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+auth
+auth-wal
+auth-shm
